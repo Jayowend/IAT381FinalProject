@@ -19,11 +19,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(webIntent);
     }
     protected void addItem(View view) {
-
+        Intent intent  = new Intent(this, AddActivity.class);
+        startActivity(intent);
 
     }
     protected void viewList(View view) {
-
+        Intent intent = new Intent(this, ListActivity.class);
+        startActivity(intent);
     }
     protected void options(View view) {
 
