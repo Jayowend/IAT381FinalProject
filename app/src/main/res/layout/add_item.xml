@@ -50,15 +50,23 @@
         android:layout_marginStart="15dp"/>
 
     <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:layout_marginStart="15dp"/>
+        android:text="Save"
+        android:layout_width="300px"
+        android:layout_height="40dp"
+        android:id="@+id/save_button"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:textColor="#FFFFFF"
+        android:background="#85C9E8"/>
 
     <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button2" />
+        android:text="Discard"
+        android:layout_width="300px"
+        android:layout_height="40dp"
+        android:id="@+id/discard_button"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:textColor="#FFFFFF"
+        android:background="#7C9BB2"/>
+
 </LinearLayout>

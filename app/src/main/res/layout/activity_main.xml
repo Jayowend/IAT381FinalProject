@@ -23,7 +23,7 @@
         android:layout_width="200px"
         android:layout_height="60px"
         android:id="@+id/addItem_Button"
-        android:background="#648DFF"
+        android:background="#85C9E8"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
