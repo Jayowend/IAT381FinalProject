@@ -18,5 +18,14 @@ public class MainActivity extends AppCompatActivity {
         Intent webIntent = new Intent(Intent.ACTION_VIEW, webPage);
         startActivity(webIntent);
     }
-    
+    protected void addItem(View view) {
+
+
+    }
+    protected void viewList(View view) {
+
+    }
+    protected void options(View view) {
+
+    }
 }

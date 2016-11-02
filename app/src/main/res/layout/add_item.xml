@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Adding an Item"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textSize="48px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addItem"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:text="Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Name"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:textSize="28px" />
+
+    <EditText
+        android:layout_width="362dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/Name_editText"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:text="Expiration Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Expiration Date"
+        android:ems="10"
+        android:id="@+id/date_editText"
+        android:layout_marginStart="15dp"/>
+
+    <Button
+        android:text="Save"
+        android:layout_width="300px"
+        android:layout_height="40dp"
+        android:id="@+id/save_button"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:textColor="#FFFFFF"
+        android:background="#85C9E8"/>
+
+    <Button
+        android:text="Discard"
+        android:layout_width="300px"
+        android:layout_height="40dp"
+        android:id="@+id/discard_button"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:textColor="#FFFFFF"
+        android:background="#7C9BB2"/>
+
+</LinearLayout>

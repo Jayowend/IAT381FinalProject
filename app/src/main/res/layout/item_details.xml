@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:text="Name of Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textSize="48px"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:text="Expirary Date"
+        android:textStyle="italic"
+        android:textSize="32px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"/>
+
+    <Button
+        android:text="Delete"
+        android:layout_width="300px"
+        android:layout_height="40dp"
+        android:id="@+id/delete_button"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:textColor="#FFFFFF"
+        android:background="#85C9E8"/>
+
+    <Button
+        android:text="back"
+        android:layout_width="300px"
+        android:layout_height="40dp"
+        android:id="@+id/back_button"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:textColor="#FFFFFF"
+        android:background="#7C9BB2" />
+</LinearLayout>
