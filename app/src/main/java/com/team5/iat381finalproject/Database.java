@@ -21,12 +21,10 @@ public class Database {
     }
     public long insertData (String name, int year, int month, int day) {
         SQLiteDatabase db = helper.getWritableDatabase();
-
+        String expDate = Integer.toString(year) + "-" +Integer.toString(month)+ "-" + Integer.toString(day);
         ContentValues contentValues = new ContentValues();
         contentValues.put(Constants.NAME, name);
-        contentValues.put(Constants.YEAR, Integer.toString(year));
-        contentValues.put(Constants.MONTH, Integer.toString(month));
-        contentValues.put(Constants.DAY, Integer.toString(day));
+        contentValues.put(Constants.EXP, expDate);
 
         long id = db.insert (Constants.TABLE_NAME, null, contentValues);
         return id;
@@ -34,7 +32,7 @@ public class Database {
 
     public Cursor getData() {
         SQLiteDatabase db = helper.getWritableDatabase();
-        String[] columns = {Constants.UID, Constants.NAME, Constants.YEAR, Constants.MONTH, Constants.DAY};
+        String[] columns = {Constants.UID, Constants.NAME, Constants.EXP};
         Cursor cursor = db.query(Constants.TABLE_NAME, columns, null, null, null, null, null);
         return cursor;
 
@@ -46,7 +44,7 @@ public class Database {
         SQLiteDatabase db = helper.getWritableDatabase();
 
 //        String[] columns = {Constants.NAME, Constants.F, Constants.LATIN, Constants.LOCATION};
-        String[] columns = {Constants.UID, Constants.NAME, Constants.YEAR, Constants.MONTH, Constants.DAY};
+        String[] columns = {Constants.UID, Constants.NAME, Constants.EXP};
         String selection = Constants.NAME + "='" +type+ "'";  //Constants.TYPE = 'type'
         Cursor cursor = db.query(Constants.TABLE_NAME, columns, selection, null, null, null, null);
 
