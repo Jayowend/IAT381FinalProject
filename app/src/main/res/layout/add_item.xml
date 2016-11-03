@@ -26,11 +26,11 @@
     <EditText
         android:layout_width="362dp"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
         android:ems="10"
         android:id="@+id/Name_editText"
-        android:layout_marginStart="15dp"/>
+        android:layout_marginStart="15dp"
+        android:hint="Name"
+        android:inputType="text" />
 
     <TextView
         android:text="Expiration Date"
@@ -43,11 +43,13 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Expiration Date"
         android:ems="10"
         android:id="@+id/date_editText"
-        android:layout_marginStart="15dp"/>
+        android:layout_marginStart="15dp"
+        android:inputType="date"
+        android:hint="MM/DD/YY"
+        android:maxLength="8"
+        android:focusable="false" />
 
     <Button
         android:text="Save"
@@ -67,6 +69,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:textColor="#FFFFFF"
-        android:background="#7C9BB2"/>
+        android:background="#7C9BB2"
+        android:onClick="discardItem" />
 
 </LinearLayout>

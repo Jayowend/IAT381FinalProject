@@ -27,7 +27,8 @@
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:onClick="addItem" />
 
     <TextView
         android:text="Your inventory"
