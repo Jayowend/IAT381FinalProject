@@ -31,16 +31,39 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
         // For the cursor adapter, specify which columns go into which views
         String[] fromColumns = {Constants.NAME, Constants.EXP};
 
-//        int[] toViews = {R.id.plantNameEntry, R .id.plantTypeEntry, R.id.latinNameEntry, R.id.locationEntry }; // The TextView in simple_list_item_1
+        int[] toViews = {R.id.nameTextView, R .id.dateTextView }; // The TextView in simple_list_item_1
 
-//        myAdapter = new SimpleCursorAdapter(this, R.layout.list_row, cursor, fromColumns, toViews, 2);
+        myAdapter = new SimpleCursorAdapter(this, R.layout.list_row, cursor, fromColumns, toViews, 2);
         myList.setAdapter(myAdapter);
         myList.setOnItemClickListener(this);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, ItemActivity.class);
+        intent.putExtra("position",position);
+        startActivity(intent);
 
+//        Cursor cursor = db.getData();
+//        String object = db.getData();
+//        Toast.makeText(this, cursor.getString(position), Toast.LENGTH_SHORT).show();
+//        Item item = (Item) object;
+//        String name = item.getName()
+
+
+
+
+
+//
+////        String name = v.findViewById(R.id.nameTextView).toString();
+//
+//
+////
+//        Toast.makeText(this, "works", Toast.LENGTH_SHORT).show();
+//
+////        Toast.makeText(this, position +"", Toast.LENGTH_SHORT).show();
+//
+////
     }
 }
 
