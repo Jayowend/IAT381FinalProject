@@ -41,9 +41,10 @@ public class Database {
     public Cursor getSelectedData(String type)
     {
         //select plants from database of type 'herb'
-        SQLiteDatabase db = helper.getWritableDatabase();
+
 
 //        String[] columns = {Constants.NAME, Constants.F, Constants.LATIN, Constants.LOCATION};
+        SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = {Constants.UID, Constants.NAME, Constants.EXP};
         String selection = Constants.NAME + "='" +type+ "'";  //Constants.TYPE = 'type'
         Cursor cursor = db.query(Constants.TABLE_NAME, columns, selection, null, null, null, null);

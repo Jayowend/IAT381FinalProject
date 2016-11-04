@@ -15,7 +15,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
     ListView myList;
     Database db;
     SimpleCursorAdapter myAdapter;
-
+    Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
         setContentView(R.layout.activity_list);
         myList = (ListView)findViewById(R.id.itemList);
         db = new Database(this);
-        Cursor cursor;
+
 
         Intent intent = getIntent();
         cursor = db.getData();
@@ -41,12 +41,12 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, ItemActivity.class);
-        intent.putExtra("position",position);
+        intent.putExtra("Name",cursor.getString(1).toString());
         startActivity(intent);
 
 //        Cursor cursor = db.getData();
 //        String object = db.getData();
-//        Toast.makeText(this, cursor.getString(position), Toast.LENGTH_SHORT).show();
+//
 //        Item item = (Item) object;
 //        String name = item.getName()
 
