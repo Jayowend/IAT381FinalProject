@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,8 +25,7 @@ public class AddActivity extends AppCompatActivity{
 
     EditText nameEdit, expiredateEdit;
     private int year, month, day;
-
-    //    database db;
+    Database db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,21 +70,19 @@ public class AddActivity extends AppCompatActivity{
 
     public void addItem (View view) {
         String name = nameEdit.getText().toString();
-        String expireDate = expiredateEdit.getText().toString();
 
+        String expireDate = expiredateEdit.getText().toString();
+        long id = db.insertData(name, year, month, day);
 //        long id = db.insertData(name,expireDate);
-//        if (id < 0)
-//        {
-//            Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show();
-//        }
-//        else
-//        {
-//            Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
-//        }
-//        plantName.setText("");
-//        plantType.setText("");
-//        latinName.setText("");
-//        location.setText("");
+        if (id < 0)
+        {
+            Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+        }
+        finish();
     }
 
     static final int REQUEST_IMAGE_CAPTURE = 1;

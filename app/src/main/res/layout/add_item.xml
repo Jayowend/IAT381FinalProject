@@ -88,6 +88,7 @@
         android:id="@+id/save_button"
         android:textColor="#FFFFFF"
         android:background="#85C9E8"
+        android:onClick="addItem"
         android:layout_marginStart="5dp"
         android:layout_marginTop="22dp"
         android:layout_below="@+id/date_editText"
