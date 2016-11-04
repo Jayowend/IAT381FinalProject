@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ItemActivity extends AppCompatActivity {
     TextView name, date;
@@ -20,8 +21,12 @@ public class ItemActivity extends AppCompatActivity {
         date = (TextView)findViewById(R.id.expirarydate);
         Intent intent = getIntent();
         name.setText(getIntent().getStringExtra("Name"));
+        date.setText(getIntent().getStringExtra("Date"));
         cursor = db.getSelectedData(getIntent().getStringExtra("Name"));
-//        name.setText("test");
+//        cursor.move(1);
+//        Toast.makeText(this, cursor.getColumnCount(), Toast.LENGTH_SHORT).show();
+
+//        name.setText("textStyle");
 //        date.setText(cursor.getString(2));
 
 
@@ -36,7 +41,10 @@ public class ItemActivity extends AppCompatActivity {
     public void backButton (View view) {
         finish();
     }
+
     public void delete (View view) {
+        db.RemoveData(name.getText().toString());
+
         finish();
     }
 }

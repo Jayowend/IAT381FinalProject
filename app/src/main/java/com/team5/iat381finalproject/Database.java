@@ -51,6 +51,9 @@ public class Database {
 
         return cursor;
     }
+    public boolean RemoveData(String type) {
+        return db.delete(Constants.TABLE_NAME, Constants.NAME + "=" + type, null) > 0;
+    }
 
 }
 

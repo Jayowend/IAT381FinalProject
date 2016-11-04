@@ -42,6 +42,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, ItemActivity.class);
         intent.putExtra("Name",cursor.getString(1).toString());
+        intent.putExtra("Date",cursor.getString(2).toString());
         startActivity(intent);
 
 //        Cursor cursor = db.getData();
