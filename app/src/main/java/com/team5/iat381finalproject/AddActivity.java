@@ -31,7 +31,7 @@ public class AddActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item);
         nameEdit = (EditText) findViewById(R.id.Name_editText);
-
+        db= new Database(this);
         expiredateEdit = (EditText) findViewById(R.id.date_editText);
 
         // grab current date in calendar
