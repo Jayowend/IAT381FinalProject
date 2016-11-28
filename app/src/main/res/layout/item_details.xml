@@ -21,12 +21,12 @@
 
 
     <TextView
-        android:text="Expirary Date"
+        android:text="Expiration Date"
         android:textStyle="italic"
         android:textSize="32px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/expirarydate"
+        android:id="@+id/expiryDate"
         android:layout_below="@+id/nameOfItem"
         android:layout_alignStart="@+id/nameOfItem"
         android:layout_marginTop="0dp" />
@@ -37,7 +37,7 @@
         app:srcCompat="@drawable/photo"
         android:id="@+id/imageOfItem"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/expirarydate"
+        android:layout_below="@+id/expiryDate"
         android:layout_centerHorizontal="true" />
 
     <Button

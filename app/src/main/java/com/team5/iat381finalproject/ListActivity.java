@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
 public class ListActivity extends Activity implements AdapterView.OnItemClickListener{
     ListView myList;
@@ -36,27 +35,6 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
         intent.putExtra("Name",cursor.getString(1));
         intent.putExtra("Date",cursor.getString(2));
         startActivity(intent);
-
-//        Cursor cursor = db.getData();
-//        String object = db.getData();
-//
-//        Item item = (Item) object;
-//        String name = item.getName()
-
-
-
-
-
-//
-////        String name = v.findViewById(R.id.nameTextView).toString();
-//
-//
-////
-//        Toast.makeText(this, "works", Toast.LENGTH_SHORT).show();
-//
-////        Toast.makeText(this, position +"", Toast.LENGTH_SHORT).show();
-//
-////
     }
 
 
@@ -64,9 +42,9 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
         myList = (ListView)findViewById(R.id.itemList);
         db = new Database(this);
         cursor = db.getData();
+
         // For the cursor adapter, specify which columns go into which views
         String[] fromColumns = {Constants.NAME, Constants.EXP};
-
         int[] toViews = {R.id.nameTextView, R .id.dateTextView }; // The TextView in simple_list_item_1
 
         myAdapter = new SimpleCursorAdapter(this, R.layout.list_row, cursor, fromColumns, toViews, 2);

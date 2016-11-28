@@ -1,8 +1,5 @@
 package com.team5.iat381finalproject;
 
-/**
- * Created by Chris on 11/2/2016.
- */
 public class Constants {
     public static final String DATABASE_NAME = "FRIDGE";
     public static final String TABLE_NAME = "INFOTABLE";

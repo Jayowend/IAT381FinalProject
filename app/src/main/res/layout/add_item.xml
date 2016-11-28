@@ -41,7 +41,7 @@
         android:layout_width="362dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:id="@+id/Name_editText"
+        android:id="@+id/nameEditText"
         android:layout_marginStart="15dp"
         android:hint="Name"
         android:inputType="text"
@@ -54,14 +54,14 @@
         android:id="@+id/expirationDate"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
-        android:layout_below="@+id/Name_editText"/>
+        android:layout_below="@+id/nameEditText"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:ems="10"
-        android:id="@+id/date_editText"
+        android:id="@+id/expirationEditText"
         android:inputType="date"
         android:hint="MM/DD/YY"
         android:maxLength="8"
@@ -79,7 +79,7 @@
         android:onClick="discardItem"
         android:layout_marginTop="22dp"
         android:layout_alignStart="@+id/addItem"
-        android:layout_below="@+id/date_editText" />
+        android:layout_below="@+id/expirationEditText" />
 
     <Button
         android:text="Save"
@@ -91,7 +91,7 @@
         android:onClick="addItem"
         android:layout_marginStart="5dp"
         android:layout_marginTop="22dp"
-        android:layout_below="@+id/date_editText"
+        android:layout_below="@+id/expirationEditText"
         android:layout_toEndOf="@+id/discard_button"/>
 
 </RelativeLayout>

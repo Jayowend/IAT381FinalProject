@@ -24,17 +24,19 @@ import java.io.IOException;
 import java.util.Date;
 
 public class AddActivity extends AppCompatActivity{
-
-    EditText nameEdit, expiredateEdit;
+    EditText nameEditText, expireDateEditText;
     private int year, month, day;
     Database db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item);
-        nameEdit = (EditText) findViewById(R.id.Name_editText);
-        db= new Database(this);
-        expiredateEdit = (EditText) findViewById(R.id.date_editText);
+
+        nameEditText = (EditText) findViewById(R.id.nameEditText);
+        expireDateEditText = (EditText) findViewById(R.id.expirationEditText);
+
+        db = new Database(this);
 
         // grab current date in calendar
         final Calendar calendar = Calendar.getInstance();
@@ -43,7 +45,7 @@ public class AddActivity extends AppCompatActivity{
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
         // expiry date formatting with DatePickerDialog
-        expiredateEdit.setOnClickListener(new View.OnClickListener() {
+        expireDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // new DatePickerDialog
@@ -57,7 +59,7 @@ public class AddActivity extends AppCompatActivity{
                         // format date
                         calendar.set(pYear, pMonth, pDay);
                         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
-                        expiredateEdit.setText(sdf.format(calendar.getTime()));
+                        expireDateEditText.setText(sdf.format(calendar.getTime()));
                     }
                 }, year, month, day);
                 datePickerDialog.setTitle("Select expiry date");
@@ -71,24 +73,20 @@ public class AddActivity extends AppCompatActivity{
     }
 
     public void addItem (View view) {
-        String name = nameEdit.getText().toString();
-
-        String expireDate = expiredateEdit.getText().toString();
+        String name = nameEditText.getText().toString();
         long id = db.insertData(name, year, month, day);
-//        long id = db.insertData(name,expireDate);
-        if (id < 0)
-        {
-            Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show();
+
+        if (id < 0) {
+            Toast.makeText(this, "Failed to add Item", Toast.LENGTH_SHORT).show();
         }
-        else
-        {
-            Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+        else {
+            Toast.makeText(this, "Item Added", Toast.LENGTH_SHORT).show();
         }
+
         finish();
     }
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
-
     public void addPhoto(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -112,7 +110,6 @@ public class AddActivity extends AppCompatActivity{
     }
 
     String mCurrentPhotoPath;
-
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
