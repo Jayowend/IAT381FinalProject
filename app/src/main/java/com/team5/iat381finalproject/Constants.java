@@ -1,6 +1,6 @@
 package com.team5.iat381finalproject;
 
-public class Constants {
+class Constants {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "freshi.db";
     public static final String TABLE_NAME = "inventory";

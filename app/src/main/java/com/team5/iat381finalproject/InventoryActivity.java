@@ -12,8 +12,6 @@ import android.widget.SimpleCursorAdapter;
 public class InventoryActivity extends Activity implements AdapterView.OnItemClickListener{
     private Database db;
     private Cursor cursor;
-    private ListView myList;
-    private SimpleCursorAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +29,7 @@ public class InventoryActivity extends Activity implements AdapterView.OnItemCli
     @Override
     public void onPause() {
         super.onPause();
+        db.close();
         cursor.close();
     }
 
@@ -40,7 +39,7 @@ public class InventoryActivity extends Activity implements AdapterView.OnItemCli
         intent.putExtra("position", position);
         startActivity(intent);
     }
-    
+
     private void populateList() {
         db = new Database(this);
         cursor = db.getData();
@@ -49,10 +48,11 @@ public class InventoryActivity extends Activity implements AdapterView.OnItemCli
         String[] fromColumns = {Constants.NAME, Constants.EXP};
         int[] toViews = {R.id.nameTextView, R.id.dateTextView }; // The TextView in simple_list_item_1
 
-        myAdapter = new SimpleCursorAdapter(this, R.layout.list_row, cursor, fromColumns, toViews, 2);
-        myList = (ListView) findViewById(R.id.itemList);
+        SimpleCursorAdapter myAdapter = new SimpleCursorAdapter(this, R.layout.list_row, cursor, fromColumns, toViews, 2);
+        ListView myList = (ListView) findViewById(R.id.itemList);
         myList.setAdapter(myAdapter);
         myList.setOnItemClickListener(this);
+        db.close();
     }
 }
 

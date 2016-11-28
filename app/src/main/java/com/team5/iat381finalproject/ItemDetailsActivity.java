@@ -9,25 +9,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.sql.Blob;
-
 public class ItemDetailsActivity extends AppCompatActivity {
     private Database db;
     private Cursor cursor;
     private String uid;
-    private byte[] imageByte = new byte[0];
-
-    private ImageView itemImageView;
-    private TextView name, date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itemdetails);
 
-        name = (TextView) findViewById(R.id.itemName);
-        date = (TextView) findViewById(R.id.expirationDate);
-        itemImageView = (ImageView) findViewById(R.id.itemImage);
+        TextView name = (TextView) findViewById(R.id.itemName);
+        TextView date = (TextView) findViewById(R.id.expirationDate);
+        ImageView itemImageView = (ImageView) findViewById(R.id.itemImage);
 
         db = new Database(this);
         cursor = db.getData();
@@ -38,11 +32,21 @@ public class ItemDetailsActivity extends AppCompatActivity {
         name.setText(cursor.getString(cursor.getColumnIndexOrThrow(Constants.NAME)));
         date.setText(cursor.getString(cursor.getColumnIndexOrThrow(Constants.EXP)));
 
-        imageByte = cursor.getBlob(cursor.getColumnIndexOrThrow(Constants.IMG));
+        byte[] imageByte = cursor.getBlob(cursor.getColumnIndexOrThrow(Constants.IMG));
         if (imageByte.length > 0) {
             Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
             itemImageView.setImageBitmap(imageBitmap);
         }
+
+        cursor.close();
+        db.close();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        db.close();
+        cursor.close();
     }
 
     public void backButton (View view) {
@@ -51,6 +55,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
     public void delete (View view) {
         db.RemoveData(uid);
+        db.close();
         finish();
     }
 }

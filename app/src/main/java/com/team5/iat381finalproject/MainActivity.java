@@ -30,7 +30,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void options(View view) {
-
-    }
+    //public void options(View view) { }
 }

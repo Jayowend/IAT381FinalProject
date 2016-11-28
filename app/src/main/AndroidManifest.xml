@@ -35,7 +35,7 @@
         </activity>
         <activity android:name=".InventoryActivity" />
         <activity android:name=".AddItemActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ItemDetailsActivity"></activity>
+        <activity android:name=".ItemDetailsActivity" />
     </application>
 
 </manifest>

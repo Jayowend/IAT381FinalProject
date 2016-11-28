@@ -23,6 +23,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Locale;
 
 public class AddItemActivity extends AppCompatActivity{
     private EditText nameEditText, expireDateEditText;
@@ -59,7 +60,7 @@ public class AddItemActivity extends AppCompatActivity{
 
                         // format date
                         calendar.set(pYear, pMonth, pDay);
-                        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
+                        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy", Locale.CANADA);
                         expireDateEditText.setText(sdf.format(calendar.getTime()));
                     }
                 }, year, month, day);
@@ -67,6 +68,12 @@ public class AddItemActivity extends AppCompatActivity{
                 datePickerDialog.show();
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        db.close();
     }
 
     public void addItem (View view) {
@@ -96,7 +103,7 @@ public class AddItemActivity extends AppCompatActivity{
         finish();
     }
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     public void addPhoto(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -119,7 +126,7 @@ public class AddItemActivity extends AppCompatActivity{
         }
     }
 
-    Bitmap imageBitmap = null;
+    private Bitmap imageBitmap = null;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -134,10 +141,10 @@ public class AddItemActivity extends AppCompatActivity{
         }
     }
 
-    String mCurrentPhotoPath;
+    private String mCurrentPhotoPath;
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CANADA).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
