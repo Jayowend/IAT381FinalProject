@@ -24,7 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
-public class AddActivity extends AppCompatActivity{
+public class AddItemActivity extends AppCompatActivity{
     EditText nameEditText, expireDateEditText;
     private int year, month, day;
     Database db;

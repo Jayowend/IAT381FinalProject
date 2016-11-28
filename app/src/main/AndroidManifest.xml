@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListActivity" />
-        <activity android:name=".AddActivity" />
+        <activity android:name=".AddItemActivity" />
         <activity android:name=".ItemActivity"></activity>
     </application>
 
