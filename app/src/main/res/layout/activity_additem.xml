@@ -34,7 +34,6 @@
         android:id="@+id/Name"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
-        android:textSize="28px"
         android:layout_below="@+id/imageButton"/>
 
     <EditText
@@ -43,9 +42,9 @@
         android:ems="10"
         android:id="@+id/nameEditText"
         android:layout_marginStart="15dp"
-        android:hint="Name"
         android:inputType="text"
-        android:layout_below="@+id/Name"/>
+        android:layout_below="@+id/Name"
+        android:hint="e.g. cookies" />
 
     <TextView
         android:text="Expiration Date"

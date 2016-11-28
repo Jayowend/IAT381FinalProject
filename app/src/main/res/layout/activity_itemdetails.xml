@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/photo_placeholder"
-        android:id="@+id/imageOfItem"
+        android:id="@+id/itemImage"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/expirationDate"
         android:layout_centerHorizontal="true" />
@@ -45,11 +45,11 @@
         android:layout_width="350px"
         android:layout_height="40dp"
         android:onClick="backButton"
-        android:id="@+id/back_button"
+        android:id="@+id/backButton"
         android:layout_marginTop="30dp"
         android:textColor="#FFFFFF"
         android:background="#7C9BB2"
-        android:layout_below="@+id/imageOfItem"
+        android:layout_below="@+id/itemImage"
         android:layout_alignStart="@+id/itemName" />
 
 
@@ -57,14 +57,14 @@
         android:text="Delete"
         android:layout_width="350px"
         android:layout_height="40dp"
-        android:id="@+id/delete_button"
+        android:id="@+id/deleteButton"
         android:textColor="#FFFFFF"
         android:onClick="delete"
         android:background="#85C9E8"
         android:layout_marginTop="30dp"
-        android:layout_below="@+id/imageOfItem"
+        android:layout_below="@+id/itemImage"
         android:layout_marginLeft="5px"
-        android:layout_toEndOf="@+id/back_button" />
+        android:layout_toEndOf="@+id/backButton" />
 
 
 </RelativeLayout>

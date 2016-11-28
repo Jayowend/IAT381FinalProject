@@ -10,10 +10,10 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 public class InventoryActivity extends Activity implements AdapterView.OnItemClickListener{
-    ListView myList;
-    Database db;
-    SimpleCursorAdapter myAdapter;
-    Cursor cursor;
+    private Database db;
+    private Cursor cursor;
+    private ListView myList;
+    private SimpleCursorAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +37,9 @@ public class InventoryActivity extends Activity implements AdapterView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, ItemDetailsActivity.class);
-        intent.putExtra("UID",cursor.getString(0));
-        intent.putExtra("Name",cursor.getString(1));
-        intent.putExtra("Date",cursor.getString(2));
+        intent.putExtra("UID", cursor.getString(0));
+        intent.putExtra("Name", cursor.getString(1));
+        intent.putExtra("Date", cursor.getString(2));
         startActivity(intent);
     }
 
@@ -47,11 +47,13 @@ public class InventoryActivity extends Activity implements AdapterView.OnItemCli
     private void populateList() {
         myList = (ListView)findViewById(R.id.itemList);
         db = new Database(this);
-        cursor = db.getData();
+        cursor = db.getData("NAME");
 
         // For the cursor adapter, specify which columns go into which views
-        String[] fromColumns = {Constants.NAME, Constants.EXP};
-        int[] toViews = {R.id.nameTextView, R .id.dateTextView }; // The TextView in simple_list_item_1
+//        String[] fromColumns = {Constants.NAME, Constants.EXP};
+        String[] fromColumns = {Constants.NAME};
+//        int[] toViews = {R.id.nameTextView, R .id.dateTextView }; // The TextView in simple_list_item_1
+        int[] toViews = {R.id.nameTextView}; // The TextView in simple_list_item_1
 
         myAdapter = new SimpleCursorAdapter(this, R.layout.list_row, cursor, fromColumns, toViews, 2);
         myList.setAdapter(myAdapter);

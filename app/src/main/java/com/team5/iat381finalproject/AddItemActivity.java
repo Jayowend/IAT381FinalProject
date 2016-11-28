@@ -25,9 +25,9 @@ import java.io.IOException;
 import java.util.Date;
 
 public class AddItemActivity extends AppCompatActivity{
-    EditText nameEditText, expireDateEditText;
+    private EditText nameEditText, expireDateEditText;
     private int year, month, day;
-    Database db;
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
