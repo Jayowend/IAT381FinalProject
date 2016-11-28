@@ -47,13 +47,11 @@ public class InventoryActivity extends Activity implements AdapterView.OnItemCli
     private void populateList() {
         myList = (ListView)findViewById(R.id.itemList);
         db = new Database(this);
-        cursor = db.getData("NAME");
+        cursor = db.getData();
 
         // For the cursor adapter, specify which columns go into which views
-//        String[] fromColumns = {Constants.NAME, Constants.EXP};
-        String[] fromColumns = {Constants.NAME};
-//        int[] toViews = {R.id.nameTextView, R .id.dateTextView }; // The TextView in simple_list_item_1
-        int[] toViews = {R.id.nameTextView}; // The TextView in simple_list_item_1
+        String[] fromColumns = {Constants.NAME, Constants.EXP};
+        int[] toViews = {R.id.nameTextView, R.id.dateTextView }; // The TextView in simple_list_item_1
 
         myAdapter = new SimpleCursorAdapter(this, R.layout.list_row, cursor, fromColumns, toViews, 2);
         myList.setAdapter(myAdapter);

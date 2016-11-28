@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Database {
@@ -35,7 +34,6 @@ public class Database {
             }
         }
         columns = (String[]) matches.toArray(new String[matches.size()]);
-        String breakpoint = "";
     }
     public long insertData (String name, String date, byte[] photo) {
         db = databaseHelper.getWritableDatabase();
@@ -55,19 +53,10 @@ public class Database {
         return cursor;
     }
 
-    // overloaded to get specific selection
-    public Cursor getData(String constant)
+    // overloaded to get search selection for specific constant (e.g. Constants.EXP) and query
+    public Cursor getData(String constant, String query)
     {
-        String selection = Constants.UID + "='" + constant + "'";
-        try {
-            selection = Constants.class.getField(constant).get(null).toString() + "='" + constant + "'";;
-            String debug = "";
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
+        String selection = constant + "='" + query + "'";;
         db = databaseHelper.getWritableDatabase();
         Cursor cursor = db.query(Constants.TABLE_NAME, columns, selection, null, null, null, null);
         return cursor;

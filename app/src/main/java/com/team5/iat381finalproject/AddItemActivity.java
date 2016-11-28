@@ -42,7 +42,7 @@ public class AddItemActivity extends AppCompatActivity{
         // grab current date in calendar
         final Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
+        month = calendar.get(Calendar.MONTH); // NOTE: THIS IS THE INDEX, ADD 1 TO GET ACTUAL MONTH NUMBER
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
         // expiry date formatting with DatePickerDialog
@@ -71,7 +71,7 @@ public class AddItemActivity extends AppCompatActivity{
 
     public void addItem (View view) {
         String name = nameEditText.getText().toString();
-        String date = month + "/" + day + "/" + year;
+        String date = (month + 1) + "/" + day + "/" + year;
 
         // convert and store bitmap into byte array for SQL database
         byte[] photo = new byte[0];
