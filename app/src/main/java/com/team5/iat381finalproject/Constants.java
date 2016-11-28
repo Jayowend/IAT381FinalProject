@@ -8,5 +8,4 @@ public class Constants {
     public static final String EXP = "Date";
     public static final String IMG = "Image";
     public static final int DATABASE_VERSION = 1;
-
 }

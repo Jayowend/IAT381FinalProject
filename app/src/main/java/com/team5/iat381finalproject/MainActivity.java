@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void viewList(View view) {
-        Intent intent = new Intent(this, ListActivity.class);
+        Intent intent = new Intent(this, InventoryActivity.class);
         startActivity(intent);
     }
 

@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-public class Helper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
     private Context context;
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME;
 
@@ -18,7 +18,7 @@ public class Helper extends SQLiteOpenHelper {
                     Constants.EXP + " TEXT, " +
                     Constants.IMG + " BLOB);" ;
 
-    public Helper(Context context){
+    public DatabaseHelper(Context context){
         super(context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION);
         this.context = context;
     }

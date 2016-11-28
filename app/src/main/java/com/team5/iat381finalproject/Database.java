@@ -8,14 +8,14 @@ import android.database.sqlite.SQLiteDatabase;
 public class Database {
     SQLiteDatabase db;
     private Context context;
-    private final Helper helper;
+    private final DatabaseHelper databaseHelper;
 
     public Database (Context c) {
         context = c;
-        helper = new Helper(context);
+        databaseHelper = new DatabaseHelper(context);
     }
     public long insertData (String name, String date, byte[] photo) {
-        SQLiteDatabase db = helper.getWritableDatabase();
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(Constants.NAME, name);
@@ -27,7 +27,7 @@ public class Database {
     }
 
     public Cursor getData() {
-        SQLiteDatabase db = helper.getWritableDatabase();
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
         String[] columns = {Constants.UID, Constants.NAME, Constants.EXP};
         Cursor cursor = db.query(Constants.TABLE_NAME, columns, null, null, null, null, null);
         return cursor;
@@ -35,7 +35,7 @@ public class Database {
 
     public Cursor getSelectedData(String uid)
     {
-        SQLiteDatabase db = helper.getWritableDatabase();
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
         String[] columns = {Constants.UID, Constants.NAME, Constants.EXP};
         String selection = Constants.UID + "='" + uid + "'";  //Constants.UID = 'uid'
         Cursor cursor = db.query(Constants.TABLE_NAME, columns, selection, null, null, null, null);
@@ -43,7 +43,7 @@ public class Database {
     }
 
     public boolean RemoveData(String uid) {
-        SQLiteDatabase db = helper.getWritableDatabase();
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
         return db.delete(Constants.TABLE_NAME, Constants.UID +  "='" + uid + "'", null) > 0;
     }
 }

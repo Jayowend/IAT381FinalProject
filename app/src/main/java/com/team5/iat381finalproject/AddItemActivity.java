@@ -32,7 +32,7 @@ public class AddItemActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_item);
+        setContentView(R.layout.activity_additem);
 
         nameEditText = (EditText) findViewById(R.id.nameEditText);
         expireDateEditText = (EditText) findViewById(R.id.expirationEditText);

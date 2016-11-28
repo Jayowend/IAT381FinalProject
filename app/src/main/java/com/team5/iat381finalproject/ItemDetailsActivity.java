@@ -5,14 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-public class ItemActivity extends AppCompatActivity {
+public class ItemDetailsActivity extends AppCompatActivity {
     TextView name, date;
     String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item_details);
+        setContentView(R.layout.activity_itemdetails);
 
         name = (TextView)findViewById(R.id.itemName);
         date = (TextView)findViewById(R.id.expirationDate);

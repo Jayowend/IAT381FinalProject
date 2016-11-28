@@ -33,9 +33,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListActivity" />
+        <activity android:name=".InventoryActivity" />
         <activity android:name=".AddItemActivity" />
-        <activity android:name=".ItemActivity"></activity>
+        <activity android:name=".ItemDetailsActivity"></activity>
     </application>
 
 </manifest>

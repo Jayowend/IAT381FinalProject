@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-public class ListActivity extends Activity implements AdapterView.OnItemClickListener{
+public class InventoryActivity extends Activity implements AdapterView.OnItemClickListener{
     ListView myList;
     Database db;
     SimpleCursorAdapter myAdapter;
@@ -18,7 +18,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_inventory);
         populateList();
      }
 
@@ -36,7 +36,7 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, ItemActivity.class);
+        Intent intent = new Intent(this, ItemDetailsActivity.class);
         intent.putExtra("UID",cursor.getString(0));
         intent.putExtra("Name",cursor.getString(1));
         intent.putExtra("Date",cursor.getString(2));
