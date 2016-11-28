@@ -7,9 +7,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 class DatabaseHelper extends SQLiteOpenHelper {
-    private final Context context;
-    private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME;
+    private static DatabaseHelper mInstance = null;
+    private static Context context;
 
+    private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME;
     private static final String CREATE_TABLE =
             "CREATE TABLE " +
                     Constants.TABLE_NAME + " (" +
@@ -18,7 +19,15 @@ class DatabaseHelper extends SQLiteOpenHelper {
                     Constants.EXP + " TEXT, " +
                     Constants.IMG + " BLOB);" ;
 
-    public DatabaseHelper(Context context){
+    // use singleton instance for database helper to prevent database/cursor leaks
+    // http://stackoverflow.com/questions/18147354/sqlite-connection-leaked-although-everything-closed/18148718#18148718
+    public static DatabaseHelper getInstance(Context context) {
+        if (mInstance == null)
+            mInstance = new DatabaseHelper((context.getApplicationContext()));
+        return mInstance;
+    }
+
+    private DatabaseHelper(Context context){
         super(context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION);
         this.context = context;
     }

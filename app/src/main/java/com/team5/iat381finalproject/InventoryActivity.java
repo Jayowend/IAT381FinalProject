@@ -27,13 +27,6 @@ public class InventoryActivity extends Activity implements AdapterView.OnItemCli
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        db.close();
-        cursor.close();
-    }
-
-    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, ItemDetailsActivity.class);
         intent.putExtra("position", position);
@@ -52,7 +45,6 @@ public class InventoryActivity extends Activity implements AdapterView.OnItemCli
         ListView myList = (ListView) findViewById(R.id.itemList);
         myList.setAdapter(myAdapter);
         myList.setOnItemClickListener(this);
-        db.close();
     }
 }
 

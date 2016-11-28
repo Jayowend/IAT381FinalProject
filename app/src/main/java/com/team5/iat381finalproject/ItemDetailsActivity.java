@@ -37,16 +37,6 @@ public class ItemDetailsActivity extends AppCompatActivity {
             Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
             itemImageView.setImageBitmap(imageBitmap);
         }
-
-        cursor.close();
-        db.close();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        db.close();
-        cursor.close();
     }
 
     public void backButton (View view) {
@@ -55,7 +45,6 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
     public void delete (View view) {
         db.RemoveData(uid);
-        db.close();
         finish();
     }
 }
