@@ -8,18 +8,18 @@ import android.widget.Toast;
 
 public class Helper extends SQLiteOpenHelper {
     private Context context;
+    private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME;
 
     private static final String CREATE_TABLE =
-            "CREATE TABLE "+
+            "CREATE TABLE " +
                     Constants.TABLE_NAME + " (" +
                     Constants.UID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     Constants.NAME + " TEXT, " +
-                    Constants.EXP + " TEXT);" ;
-
-    private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME;
+                    Constants.EXP + " TEXT, " +
+                    Constants.IMG + " BLOB);" ;
 
     public Helper(Context context){
-        super (context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION);
+        super(context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION);
         this.context = context;
     }
 

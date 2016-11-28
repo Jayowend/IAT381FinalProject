@@ -29,6 +29,12 @@ public class ListActivity extends Activity implements AdapterView.OnItemClickLis
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        cursor.close();
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, ItemActivity.class);
         intent.putExtra("UID",cursor.getString(0));

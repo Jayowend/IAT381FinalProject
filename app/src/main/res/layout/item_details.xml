@@ -11,7 +11,7 @@
         android:text="Name of Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/nameOfItem"
+        android:id="@+id/itemName"
         android:textStyle="bold"
         android:textAllCaps="true"
         android:textSize="48px"
@@ -26,18 +26,18 @@
         android:textSize="32px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/expiryDate"
-        android:layout_below="@+id/nameOfItem"
-        android:layout_alignStart="@+id/nameOfItem"
+        android:id="@+id/expirationDate"
+        android:layout_below="@+id/itemName"
+        android:layout_alignStart="@+id/itemName"
         android:layout_marginTop="0dp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/photo"
+        app:srcCompat="@drawable/photo_placeholder"
         android:id="@+id/imageOfItem"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/expiryDate"
+        android:layout_below="@+id/expirationDate"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -50,7 +50,7 @@
         android:textColor="#FFFFFF"
         android:background="#7C9BB2"
         android:layout_below="@+id/imageOfItem"
-        android:layout_alignStart="@+id/nameOfItem" />
+        android:layout_alignStart="@+id/itemName" />
 
 
     <Button

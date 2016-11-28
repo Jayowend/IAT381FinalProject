@@ -6,6 +6,7 @@ public class Constants {
     public static final String UID = "_id";
     public static final String NAME = "Name";
     public static final String EXP = "Date";
-    public static final int DATABASE_VERSION = 32;
+    public static final String IMG = "Image";
+    public static final int DATABASE_VERSION = 1;
 
 }

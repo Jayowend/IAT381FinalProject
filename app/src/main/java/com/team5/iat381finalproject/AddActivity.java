@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 //import android.icu.text.SimpleDateFormat;
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 //import android.icu.util.Calendar;
 import java.util.Calendar;
@@ -68,21 +69,31 @@ public class AddActivity extends AppCompatActivity{
         });
     }
 
-    public void discardItem(View view) {
+    public void addItem (View view) {
+        String name = nameEditText.getText().toString();
+        String date = month + "/" + day + "/" + year;
+
+        // convert and store bitmap into byte array for SQL database
+        byte[] photo = new byte[0];
+        if (imageBitmap != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+            photo = stream.toByteArray();
+            Toast.makeText(this, "inserted img", Toast.LENGTH_SHORT).show();
+        }
+
+        // insert data into db
+        long id = db.insertData(name, date, photo);
+
+        if (id < 0)
+            Toast.makeText(this, "Failed to add Item", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this, "Item Added", Toast.LENGTH_SHORT).show();
+
         finish();
     }
 
-    public void addItem (View view) {
-        String name = nameEditText.getText().toString();
-        long id = db.insertData(name, year, month, day);
-
-        if (id < 0) {
-            Toast.makeText(this, "Failed to add Item", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(this, "Item Added", Toast.LENGTH_SHORT).show();
-        }
-
+    public void discardItem(View view) {
         finish();
     }
 
@@ -91,7 +102,7 @@ public class AddActivity extends AppCompatActivity{
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
+            // Create the File where the photo_placeholder should go
             File photoFile = null;
             try {
                 photoFile = createImageFile();
@@ -106,6 +117,21 @@ public class AddActivity extends AppCompatActivity{
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
+        }
+    }
+
+    Bitmap imageBitmap = null;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+//            Bundle extras = data.getExtras();
+            try {
+                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(mCurrentPhotoPath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ImageView mImageView = (ImageView) findViewById(R.id.imageButton);
+            mImageView.setImageBitmap(imageBitmap);
         }
     }
 
@@ -125,21 +151,4 @@ public class AddActivity extends AppCompatActivity{
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-//            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = null;
-            try {
-                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(mCurrentPhotoPath));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ImageView mImageView = (ImageView) findViewById(R.id.imageButton);
-            mImageView.setImageBitmap(imageBitmap);
-        }
-    }
-
-
 }

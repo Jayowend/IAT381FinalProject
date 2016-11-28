@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.SyncStateContract;
 
 public class Database {
     SQLiteDatabase db;
@@ -15,14 +14,15 @@ public class Database {
         context = c;
         helper = new Helper(context);
     }
-    public long insertData (String name, int year, int month, int day) {
+    public long insertData (String name, String date, byte[] photo) {
         SQLiteDatabase db = helper.getWritableDatabase();
-        String expDate = Integer.toString(year) + "-" + Integer.toString(month) + "-" + Integer.toString(day);
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(Constants.NAME, name);
-        contentValues.put(Constants.EXP, expDate);
+        contentValues.put(Constants.EXP, date);
+        contentValues.put(Constants.IMG, photo);
 
-        long id = db.insert (Constants.TABLE_NAME, null, contentValues);
+        long id = db.insert(Constants.TABLE_NAME, null, contentValues);
         return id;
     }
 
