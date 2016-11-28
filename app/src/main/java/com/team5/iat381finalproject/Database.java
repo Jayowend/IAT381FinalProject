@@ -17,7 +17,7 @@ class Database {
 
     public Database (Context c) {
         context = c;
-        databaseHelper = new DatabaseHelper(context);
+        databaseHelper = DatabaseHelper.getInstance(context);
 
         // get constants columns
         Field[] constantFields = Constants.class.getFields();
@@ -41,7 +41,6 @@ class Database {
         contentValues.put(Constants.IMG, photo);
         long id = db.insert(Constants.TABLE_NAME, null, contentValues);
 
-        db.close();
         return id;
     }
 
@@ -59,13 +58,7 @@ class Database {
 
     public boolean RemoveData(String uid) {
         db = databaseHelper.getWritableDatabase();
-        boolean removed = db.delete(Constants.TABLE_NAME, Constants.UID +  "='" + uid + "'", null) > 0;
-        db.close();
-        return removed;
-    }
-
-    public void close() {
-        databaseHelper.close();
+        return db.delete(Constants.TABLE_NAME, Constants.UID +  "='" + uid + "'", null) > 0;
     }
 }
 

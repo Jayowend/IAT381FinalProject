@@ -70,12 +70,6 @@ public class AddItemActivity extends AppCompatActivity{
         });
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        db.close();
-    }
-
     public void addItem (View view) {
         String name = nameEditText.getText().toString();
         String date = (month + 1) + "/" + day + "/" + year;
