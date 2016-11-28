@@ -38,7 +38,7 @@ public class Database {
 
     }
 
-    public Cursor getSelectedData(String type)
+    public Cursor getSelectedData(String uid)
     {
         //select plants from database of type 'herb'
 
@@ -46,13 +46,14 @@ public class Database {
 //        String[] columns = {Constants.NAME, Constants.F, Constants.LATIN, Constants.LOCATION};
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = {Constants.UID, Constants.NAME, Constants.EXP};
-        String selection = Constants.NAME + "='" +type+ "'";  //Constants.TYPE = 'type'
+        String selection = Constants.UID + "='" +uid+ "'";  //Constants.UID = 'uid'
         Cursor cursor = db.query(Constants.TABLE_NAME, columns, selection, null, null, null, null);
 
         return cursor;
     }
-    public boolean RemoveData(String type) {
-        return db.delete(Constants.TABLE_NAME, Constants.NAME + "=" + type, null) > 0;
+    public boolean RemoveData(String uid) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        return db.delete(Constants.TABLE_NAME, Constants.UID +  "='" + uid + "'", null) > 0;
     }
 
 }
