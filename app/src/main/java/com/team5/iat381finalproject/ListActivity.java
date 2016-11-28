@@ -10,7 +10,6 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-
 public class ListActivity extends Activity implements AdapterView.OnItemClickListener{
     ListView myList;
     Database db;
