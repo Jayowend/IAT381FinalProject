@@ -12,7 +12,6 @@ import java.sql.Blob;
 
 public class ItemDetailsActivity extends AppCompatActivity {
     private String uid;
-    private Blob imageBlob;
     private ImageView itemImageView;
     private TextView name, date;
 

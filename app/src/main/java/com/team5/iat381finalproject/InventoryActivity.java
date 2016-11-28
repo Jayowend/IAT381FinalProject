@@ -37,15 +37,12 @@ public class InventoryActivity extends Activity implements AdapterView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, ItemDetailsActivity.class);
-        intent.putExtra("UID", cursor.getString(0));
-        intent.putExtra("Name", cursor.getString(1));
-        intent.putExtra("Date", cursor.getString(2));
+        intent.putExtra("UID", "(Constants.UID)");
         startActivity(intent);
     }
 
 
     private void populateList() {
-        myList = (ListView)findViewById(R.id.itemList);
         db = new Database(this);
         cursor = db.getData();
 
@@ -54,6 +51,7 @@ public class InventoryActivity extends Activity implements AdapterView.OnItemCli
         int[] toViews = {R.id.nameTextView, R.id.dateTextView }; // The TextView in simple_list_item_1
 
         myAdapter = new SimpleCursorAdapter(this, R.layout.list_row, cursor, fromColumns, toViews, 2);
+        myList = (ListView) findViewById(R.id.itemList);
         myList.setAdapter(myAdapter);
         myList.setOnItemClickListener(this);
     }

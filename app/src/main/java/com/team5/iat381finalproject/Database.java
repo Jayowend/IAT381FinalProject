@@ -24,15 +24,13 @@ public class Database {
         Field[] constantFields = Constants.class.getFields();
         Pattern p = Pattern.compile("\\$change|DATABASE_NAME|DATABASE_VERSION|TABLE_NAME|serialVersionUID");
         ArrayList<String> matches = new ArrayList<String>();
-        for (Field f : constantFields) {
-            if (!p.matcher(f.getName()).matches()) {
+        for (Field f : constantFields)
+            if (!p.matcher(f.getName()).matches())
                 try {
                     matches.add((String) f.get(null));
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
-            }
-        }
         columns = (String[]) matches.toArray(new String[matches.size()]);
     }
     public long insertData (String name, String date, byte[] photo) {

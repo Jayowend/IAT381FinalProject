@@ -79,7 +79,6 @@ public class AddItemActivity extends AppCompatActivity{
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             imageBitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
             photo = stream.toByteArray();
-            Toast.makeText(this, "inserted img", Toast.LENGTH_SHORT).show();
         }
 
         // insert data into db

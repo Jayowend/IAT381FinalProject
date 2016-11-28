@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     public void addItem(View view) {
         Intent intent  = new Intent(this, AddItemActivity.class);
         startActivity(intent);
-
     }
 
     public void viewList(View view) {
