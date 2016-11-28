@@ -37,11 +37,10 @@ public class InventoryActivity extends Activity implements AdapterView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, ItemDetailsActivity.class);
-        intent.putExtra("UID", "(Constants.UID)");
+        intent.putExtra("position", position);
         startActivity(intent);
     }
-
-
+    
     private void populateList() {
         db = new Database(this);
         cursor = db.getData();

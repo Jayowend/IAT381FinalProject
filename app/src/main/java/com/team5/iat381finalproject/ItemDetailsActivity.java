@@ -1,5 +1,6 @@
 package com.team5.iat381finalproject;
 
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -11,7 +12,11 @@ import android.widget.TextView;
 import java.sql.Blob;
 
 public class ItemDetailsActivity extends AppCompatActivity {
+    private Database db;
+    private Cursor cursor;
     private String uid;
+    private byte[] imageByte = new byte[0];
+
     private ImageView itemImageView;
     private TextView name, date;
 
@@ -24,14 +29,20 @@ public class ItemDetailsActivity extends AppCompatActivity {
         date = (TextView) findViewById(R.id.expirationDate);
         itemImageView = (ImageView) findViewById(R.id.itemImage);
 
+        db = new Database(this);
+        cursor = db.getData();
+        cursor.moveToPosition(getIntent().getIntExtra("position", 0));
 
-        // get data for item
-        uid = getIntent().getStringExtra("UID");
-        name.setText(getIntent().getStringExtra("Name"));
-        date.setText(getIntent().getStringExtra("Date"));
+        // get cursor data based on position from intentExtra
+        uid = cursor.getString(cursor.getColumnIndexOrThrow(Constants.UID));
+        name.setText(cursor.getString(cursor.getColumnIndexOrThrow(Constants.NAME)));
+        date.setText(cursor.getString(cursor.getColumnIndexOrThrow(Constants.EXP)));
 
-//        Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageBlob, 0, imageBlob.length);
-//        itemImageView.setImageBitmap(imageBitmap);
+        imageByte = cursor.getBlob(cursor.getColumnIndexOrThrow(Constants.IMG));
+        if (imageByte.length > 0) {
+            Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
+            itemImageView.setImageBitmap(imageBitmap);
+        }
     }
 
     public void backButton (View view) {
@@ -39,7 +50,6 @@ public class ItemDetailsActivity extends AppCompatActivity {
     }
 
     public void delete (View view) {
-        Database db = new Database(this);
         db.RemoveData(uid);
         finish();
     }

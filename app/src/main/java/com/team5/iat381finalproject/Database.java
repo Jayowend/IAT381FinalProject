@@ -51,8 +51,7 @@ public class Database {
         return cursor;
     }
 
-    // overloaded to get search selection for specific constant (e.g. Constants.EXP) and query
-    public Cursor getData(String constant, String query)
+    public Cursor getData(String constant, String query) // overloaded to get search selection for specific constant (e.g. Constants.EXP) and query
     {
         String selection = constant + "='" + query + "'";;
         db = databaseHelper.getWritableDatabase();
