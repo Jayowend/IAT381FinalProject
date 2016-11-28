@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 public class ItemActivity extends AppCompatActivity {
     TextView name, date;
+    String uid;
     Database db;
     Cursor cursor;
     @Override
@@ -20,6 +21,7 @@ public class ItemActivity extends AppCompatActivity {
         name = (TextView)findViewById(R.id.nameOfItem);
         date = (TextView)findViewById(R.id.expirarydate);
         Intent intent = getIntent();
+        uid = getIntent().getStringExtra("UID");
         name.setText(getIntent().getStringExtra("Name"));
         date.setText(getIntent().getStringExtra("Date"));
         cursor = db.getSelectedData(getIntent().getStringExtra("Name"));
@@ -43,7 +45,7 @@ public class ItemActivity extends AppCompatActivity {
     }
 
     public void delete (View view) {
-        db.RemoveData(name.getText().toString());
+        db.RemoveData(uid);
 
         finish();
     }
