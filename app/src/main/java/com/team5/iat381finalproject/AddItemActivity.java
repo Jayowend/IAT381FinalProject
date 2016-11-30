@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 //import android.icu.text.SimpleDateFormat;
@@ -42,6 +43,9 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
     private int year, month, day;
     private Database db;
     private Cursor cursor;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private int reminderOptionSelectedItemPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,15 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         expireDateEditText = (EditText) findViewById(R.id.expirationEditText);
         reminderSwitch = (Switch) findViewById(R.id.reminderSwitch);
         reminderOption = (Spinner) findViewById(R.id.reminderOptions);
+
+        // get user default prefs
+        sharedPreferences = getSharedPreferences(getString(R.string.sharedprefs_filename), Context.MODE_PRIVATE);
+        int reminderOptionSelectedItemPosition = sharedPreferences.getInt("reminderOptionSelectedItemPosition", -1);
+        if(reminderOptionSelectedItemPosition != -1)
+            reminderOption.setSelection(reminderOptionSelectedItemPosition);
+        reminderSet = sharedPreferences.getBoolean("reminderSet", false);
+        reminderSwitch.setChecked(reminderSet);
+        editor = sharedPreferences.edit();
 
         db = new Database(this);
 
@@ -88,6 +101,9 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 reminderSet = b;
+                editor.putBoolean("reminderSet", reminderSet);
+                editor.apply();
+                Log.i("debug", sharedPreferences.getBoolean("reminderSet", false)+"");
             }
         });
         reminderOption.setOnItemSelectedListener(this);
@@ -123,15 +139,18 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
             // schedule pending intent with AlarmManager
             Calendar nCalendar = Calendar.getInstance();
             nCalendar.set(year, month, day);
-            String test = (String) reminderOption.getSelectedItem();
 
-            String a = R.string.reminder_1week;
-            switch (test) {
-                case :
-                    break;
-
+            // offset notification date with user selected setting
+            String reminderSelected = (String) reminderOption.getSelectedItem();
+            int offset = 0;
+            if (reminderSelected.equals(getString(R.string.reminder_1week))) {
+                offset = -7;
+            } else if (reminderSelected.equals(getString(R.string.reminder_3days))) {
+                offset = -3;
+            } else if (reminderSelected.equals(getString(R.string.reminder_1day))) {
+                offset = -1;
             }
-            nCalendar.add(Calendar.DAY_OF_MONTH, -7);
+            nCalendar.add(Calendar.DAY_OF_MONTH, offset);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, nCalendar.getTimeInMillis(), pendingIntent);
             Log.i("debug", "pendingNotificaiton set");
@@ -206,7 +225,11 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.i("test", ""+adapterView.getItemAtPosition(i));
+        reminderOptionSelectedItemPosition = reminderOption.getSelectedItemPosition();
+        editor.putInt("reminderOptionSelectedItemPosition", reminderOptionSelectedItemPosition);
+        editor.apply();
+        reminderSwitch.setChecked(true);
+        Log.i("test", " "+adapterView.getItemAtPosition(i));
     }
 
     @Override
