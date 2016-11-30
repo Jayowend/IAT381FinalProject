@@ -25,6 +25,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        <receiver android:name=".ExpireReceiver">
+            <intent-filter>
+                <action android:name="android.media.action.EXPIRE_NOTIFICATION" />
+                <category android:name="android.intent.category.DEFAULT"></category>
+            </intent-filter>
+        </receiver>
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -33,9 +39,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InventoryActivity" />
-        <activity android:name=".AddItemActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ItemDetailsActivity" />
+        <activity android:name=".InventoryActivity"
+                  android:parentActivityName=".MainActivity">
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".AddItemActivity"
+                  android:screenOrientation="portrait"
+                  android:parentActivityName=".MainActivity">
+                  <meta-data
+                      android:name="android.support.PARENT_ACTIVITY"
+                      android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".ItemDetailsActivity"
+                  android:parentActivityName=".InventoryActivity">
+                  <meta-data
+                      android:name="android.support.PARENT_ACTIVITY"
+                      android:value=".InventoryActivity" />
+        </activity>
     </application>
 
 </manifest>

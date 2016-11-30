@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">IAT381FinalProject</string>
+
+    <string name="reminder_1week">1 week before expiry</string>
+    <string name="reminder_3days">3 days before expiry</string>
+    <string name="reminder_1day">1 day before expiry</string>
+    <string-array name="reminder_dates">
+        <item>@string/reminder_1week</item>
+        <item>@string/reminder_3days</item>
+        <item>@string/reminder_1day</item>
+    </string-array>
 </resources>

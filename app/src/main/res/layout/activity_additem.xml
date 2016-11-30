@@ -70,18 +70,6 @@
         />
 
     <Button
-        android:text="Discard"
-        android:layout_width="350px"
-        android:layout_height="40dp"
-        android:id="@+id/discard_button"
-        android:textColor="#FFFFFF"
-        android:background="#7C9BB2"
-        android:onClick="discardItem"
-        android:layout_marginTop="22dp"
-        android:layout_alignStart="@+id/addItem"
-        android:layout_below="@+id/expirationEditText" />
-
-    <Button
         android:text="Save"
         android:layout_width="350px"
         android:layout_height="40dp"
@@ -89,9 +77,42 @@
         android:textColor="#FFFFFF"
         android:background="#85C9E8"
         android:onClick="addItem"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="22dp"
+        android:layout_alignBottom="@+id/discard_button"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_alignTop="@+id/discard_button" />
+
+    <Button
+        android:text="Discard"
+        android:layout_width="350px"
+        android:layout_height="40dp"
+        android:id="@+id/discard_button"
+        android:textColor="#FFFFFF"
+        android:background="#7C9BB2"
+        android:onClick="discardItem"
+        android:layout_marginBottom="38dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/save_button"
+        android:layout_marginEnd="8dp" />
+
+    <Switch
+        android:text="Notification Reminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reminderSwitch"
+        android:layout_marginTop="12dp"
         android:layout_below="@+id/expirationEditText"
-        android:layout_toEndOf="@+id/discard_button"/>
+        android:layout_alignStart="@+id/expirationEditText"
+        android:splitTrack="false"
+        android:switchPadding="10dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reminderOptions"
+        android:layout_alignTop="@+id/reminderSwitch"
+        android:layout_alignParentEnd="true"
+        android:spinnerMode="dialog"
+        android:entries="@array/reminder_dates" />
 
 </RelativeLayout>

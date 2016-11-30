@@ -1,7 +1,11 @@
 package com.team5.iat381finalproject;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 //import android.icu.text.SimpleDateFormat;
 import java.io.ByteArrayOutputStream;
@@ -14,10 +18,15 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import java.io.File;
@@ -25,10 +34,14 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
 
-public class AddItemActivity extends AppCompatActivity{
+public class AddItemActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private EditText nameEditText, expireDateEditText;
+    private Switch reminderSwitch;
+    private Spinner reminderOption;
+    private boolean reminderSet;
     private int year, month, day;
     private Database db;
+    private Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +50,8 @@ public class AddItemActivity extends AppCompatActivity{
 
         nameEditText = (EditText) findViewById(R.id.nameEditText);
         expireDateEditText = (EditText) findViewById(R.id.expirationEditText);
+        reminderSwitch = (Switch) findViewById(R.id.reminderSwitch);
+        reminderOption = (Spinner) findViewById(R.id.reminderOptions);
 
         db = new Database(this);
 
@@ -68,7 +83,16 @@ public class AddItemActivity extends AppCompatActivity{
                 datePickerDialog.show();
             }
         });
+
+        reminderSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                reminderSet = b;
+            }
+        });
+        reminderOption.setOnItemSelectedListener(this);
     }
+
 
     public void addItem (View view) {
         String name = nameEditText.getText().toString();
@@ -84,6 +108,34 @@ public class AddItemActivity extends AppCompatActivity{
 
         // insert data into db
         long id = db.insertData(name, date, photo);
+
+        // set reminder notification
+        if (reminderSet) {
+            // new intent
+            Intent notificationIntent = new Intent("android.media.action.EXPIRE_NOTIFICATION");
+            notificationIntent.addCategory("android.intent.category.DEFAULT");
+            cursor = db.getData();
+            notificationIntent.putExtra("uid", cursor.getCount());
+
+            // create new pending intent
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(AddItemActivity.this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            // schedule pending intent with AlarmManager
+            Calendar nCalendar = Calendar.getInstance();
+            nCalendar.set(year, month, day);
+            String test = (String) reminderOption.getSelectedItem();
+
+            String a = R.string.reminder_1week;
+            switch (test) {
+                case :
+                    break;
+
+            }
+            nCalendar.add(Calendar.DAY_OF_MONTH, -7);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, nCalendar.getTimeInMillis(), pendingIntent);
+            Log.i("debug", "pendingNotificaiton set");
+        }
 
         if (id < 0)
             Toast.makeText(this, "Failed to add Item", Toast.LENGTH_SHORT).show();
@@ -150,5 +202,15 @@ public class AddItemActivity extends AppCompatActivity{
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        Log.i("test", ""+adapterView.getItemAtPosition(i));
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

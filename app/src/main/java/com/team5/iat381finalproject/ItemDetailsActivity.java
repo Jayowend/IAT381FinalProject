@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,17 +26,19 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
         db = new Database(this);
         cursor = db.getData();
-        cursor.moveToPosition(getIntent().getIntExtra("position", 0));
+        if (cursor.getCount() > 0) {
+            cursor.moveToPosition(getIntent().getIntExtra("position", 0));
+            Log.i("debug", "got position " + getIntent().getIntExtra("position", 0));
+            // get cursor data based on position from intentExtra
+            uid = cursor.getString(cursor.getColumnIndexOrThrow(Constants.UID));
+            name.setText(cursor.getString(cursor.getColumnIndexOrThrow(Constants.NAME)));
+            date.setText(cursor.getString(cursor.getColumnIndexOrThrow(Constants.EXP)));
 
-        // get cursor data based on position from intentExtra
-        uid = cursor.getString(cursor.getColumnIndexOrThrow(Constants.UID));
-        name.setText(cursor.getString(cursor.getColumnIndexOrThrow(Constants.NAME)));
-        date.setText(cursor.getString(cursor.getColumnIndexOrThrow(Constants.EXP)));
-
-        byte[] imageByte = cursor.getBlob(cursor.getColumnIndexOrThrow(Constants.IMG));
-        if (imageByte.length > 0) {
-            Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
-            itemImageView.setImageBitmap(imageBitmap);
+            byte[] imageByte = cursor.getBlob(cursor.getColumnIndexOrThrow(Constants.IMG));
+            if (imageByte.length > 0) {
+                Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
+                itemImageView.setImageBitmap(imageBitmap);
+            }
         }
     }
 
