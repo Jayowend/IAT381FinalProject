@@ -19,7 +19,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
@@ -61,7 +60,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         sharedPreferences = getSharedPreferences(getString(R.string.sharedprefs_filename), Context.MODE_PRIVATE);
         int reminderOptionSelectedItemPosition = sharedPreferences.getInt("reminderOptionSelectedItemPosition", -1);
         if(reminderOptionSelectedItemPosition != -1)
-            reminderOption.setSelection(reminderOptionSelectedItemPosition);
+            reminderOption.setSelection(reminderOptionSelectedItemPosition, false);
         reminderSet = sharedPreferences.getBoolean("reminderSet", false);
         reminderSwitch.setChecked(reminderSet);
         editor = sharedPreferences.edit();
@@ -103,7 +102,6 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                 reminderSet = b;
                 editor.putBoolean("reminderSet", reminderSet);
                 editor.apply();
-                Log.i("debug", sharedPreferences.getBoolean("reminderSet", false)+"");
             }
         });
         reminderOption.setOnItemSelectedListener(this);
@@ -153,7 +151,6 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
             nCalendar.add(Calendar.DAY_OF_MONTH, offset);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, nCalendar.getTimeInMillis(), pendingIntent);
-            Log.i("debug", "pendingNotificaiton set");
         }
 
         if (id < 0)
@@ -229,7 +226,6 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         editor.putInt("reminderOptionSelectedItemPosition", reminderOptionSelectedItemPosition);
         editor.apply();
         reminderSwitch.setChecked(true);
-        Log.i("test", " "+adapterView.getItemAtPosition(i));
     }
 
     @Override

@@ -33,7 +33,5 @@ public class ExpireReceiver extends BroadcastReceiver {
         mBuilder.setContentIntent(resultPendingIntent);
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(uid, mBuilder.build()); // save uid to allow modifying notification later
-
-        Log.i("debug", uid+"");
     }
 }
