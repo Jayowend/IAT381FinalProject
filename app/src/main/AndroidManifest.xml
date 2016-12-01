@@ -27,10 +27,15 @@
         </provider>
         <receiver android:name=".ExpireReceiver">
             <intent-filter>
-                <action android:name="android.media.action.EXPIRE_NOTIFICATION" />
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="com.team5.iat381finalproject.action.EXPIRY_NOTIFICATION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.team5.iat381finalproject.action.EXPIRY_NOTIFICATION_CLEARED" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+
 
         <activity android:name=".MainActivity">
             <intent-filter>

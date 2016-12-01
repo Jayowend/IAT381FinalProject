@@ -12,6 +12,7 @@ import android.widget.SimpleCursorAdapter;
 public class InventoryActivity extends Activity implements AdapterView.OnItemClickListener{
     private Database db;
     private Cursor cursor;
+    private SimpleCursorAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +29,13 @@ public class InventoryActivity extends Activity implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // get uid of item clicked
+        cursor = myAdapter.getCursor();
+        cursor.moveToPosition(position);
+        int uid = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(Constants.UID)));
+
         Intent intent = new Intent(this, ItemDetailsActivity.class);
-        intent.putExtra("position", position);
+        intent.putExtra("uid", uid);
         startActivity(intent);
     }
 
@@ -41,7 +47,7 @@ public class InventoryActivity extends Activity implements AdapterView.OnItemCli
         String[] fromColumns = {Constants.NAME, Constants.EXP};
         int[] toViews = {R.id.nameTextView, R.id.dateTextView }; // The TextView in simple_list_item_1
 
-        SimpleCursorAdapter myAdapter = new SimpleCursorAdapter(this, R.layout.list_row, cursor, fromColumns, toViews, 2);
+        myAdapter = new SimpleCursorAdapter(this, R.layout.list_row, cursor, fromColumns, toViews, 2);
         ListView myList = (ListView) findViewById(R.id.itemList);
         myList.setAdapter(myAdapter);
         myList.setOnItemClickListener(this);

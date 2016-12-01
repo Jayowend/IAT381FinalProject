@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 //import android.icu.text.SimpleDateFormat;
 import java.io.ByteArrayOutputStream;
@@ -41,10 +40,8 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
     private boolean reminderSet;
     private int year, month, day;
     private Database db;
-    private Cursor cursor;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private int reminderOptionSelectedItemPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +104,6 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         reminderOption.setOnItemSelectedListener(this);
     }
 
-
     public void addItem (View view) {
         String name = nameEditText.getText().toString();
         String date = (month + 1) + "/" + day + "/" + year;
@@ -121,20 +117,11 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         }
 
         // insert data into db
-        long id = db.insertData(name, date, photo);
+        int uid = (int) db.insertData(name, date, photo);
 
         // set reminder notification
         if (reminderSet) {
-            // new intent
-            Intent notificationIntent = new Intent("android.media.action.EXPIRE_NOTIFICATION");
-            notificationIntent.addCategory("android.intent.category.DEFAULT");
-            cursor = db.getData();
-            notificationIntent.putExtra("uid", cursor.getCount());
-
-            // create new pending intent
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(AddItemActivity.this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            // schedule pending intent with AlarmManager
+            // set notification calendar
             Calendar nCalendar = Calendar.getInstance();
             nCalendar.set(year, month, day);
 
@@ -149,14 +136,24 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                 offset = -1;
             }
             nCalendar.add(Calendar.DAY_OF_MONTH, offset);
+
+            // create new intent
+            Intent notificationIntent = new Intent(getString(R.string.intent_action_name_expire_notification));
+            notificationIntent.addCategory("android.intent.category.DEFAULT");
+            notificationIntent.putExtra("uid", uid);
+            editor.putInt("alarmtime_" + uid, reminderOption.getSelectedItemPosition());
+            editor.apply();
+
+            // create new pending intent and schedule pending intent with AlarmManager
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(AddItemActivity.this, uid, notificationIntent, 0);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, nCalendar.getTimeInMillis(), pendingIntent);
         }
 
-        if (id < 0)
-            Toast.makeText(this, "Failed to add Item", Toast.LENGTH_SHORT).show();
+        if (uid < 0)
+            Toast.makeText(this, "Failed to add item", Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(this, "Item Added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Item added", Toast.LENGTH_SHORT).show();
 
         finish();
     }
@@ -222,8 +219,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        reminderOptionSelectedItemPosition = reminderOption.getSelectedItemPosition();
-        editor.putInt("reminderOptionSelectedItemPosition", reminderOptionSelectedItemPosition);
+        editor.putInt("reminderOptionSelectedItemPosition", reminderOption.getSelectedItemPosition());
         editor.apply();
         reminderSwitch.setChecked(true);
     }

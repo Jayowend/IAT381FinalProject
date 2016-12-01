@@ -41,18 +41,6 @@
         android:layout_below="@+id/expirationDate"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:text="back"
-        android:layout_width="350px"
-        android:layout_height="40dp"
-        android:onClick="backButton"
-        android:id="@+id/backButton"
-        android:layout_marginTop="30dp"
-        android:textColor="#FFFFFF"
-        android:background="#7C9BB2"
-        android:layout_below="@+id/itemImage"
-        android:layout_alignStart="@+id/itemName" />
-
 
     <Button
         android:text="Delete"
@@ -62,10 +50,42 @@
         android:textColor="#FFFFFF"
         android:onClick="delete"
         android:background="#85C9E8"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/itemImage"
         android:layout_marginLeft="5px"
-        android:layout_toEndOf="@+id/backButton" />
+        android:layout_alignTop="@+id/itemName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="18dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reminderOptions"
+        android:spinnerMode="dialog"
+        android:entries="@array/reminder_dates"
+        android:layout_alignTop="@+id/reminderSwitch"
+        android:layout_alignParentEnd="true" />
+
+    <Switch
+        android:text="Reminder Notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reminderSwitch"
+        android:splitTrack="false"
+        android:switchPadding="10dp"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/itemImage"
+        android:layout_alignStart="@+id/expirationDate" />
+
+    <Button
+        android:text="back"
+        android:layout_width="350px"
+        android:layout_height="40dp"
+        android:onClick="backButton"
+        android:id="@+id/backButton"
+        android:textColor="#FFFFFF"
+        android:background="#7C9BB2"
+        android:layout_below="@+id/reminderSwitch"
+        android:layout_alignStart="@+id/reminderSwitch"
+        android:layout_marginTop="16dp" />
 
 
 </RelativeLayout>

@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">IAT381FinalProject</string>
+    <string name="app_name">Freshi</string>
     <string name="sharedprefs_filename">user_selection_defaults</string>
+    <string name="intent_action_name_expire_notification">com.team5.iat381finalproject.action.EXPIRY_NOTIFICATION</string>
+    <string name="intent_action_name_expire_notification_cleared">com.team5.iat381finalproject.action.EXPIRY_NOTIFICATION_CLEARED</string>
 
     <string name="reminder_1week">1 week before expiry</string>
     <string name="reminder_3days">3 days before expiry</string>
