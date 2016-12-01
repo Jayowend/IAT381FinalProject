@@ -20,7 +20,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class ItemDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Database db;
@@ -53,9 +56,8 @@ public class ItemDetailsActivity extends AppCompatActivity implements AdapterVie
         uid = getIntent().getIntExtra("uid", -1);
         db = new Database(this);
 
-        // disable reminder notification and clear pending for expired items
+        // set expired if coming from expired notification
         if (getString(R.string.intent_action_name_expire_notification).equals(getIntent().getAction())) {
-            reminderSwitch.setChecked(false);
             db.setExpired("true", Integer.toString(uid));
         }
 
@@ -66,7 +68,18 @@ public class ItemDetailsActivity extends AppCompatActivity implements AdapterVie
             // set data
             name.setText(cursor.getString(cursor.getColumnIndexOrThrow(Constants.NAME)));
             date.setText(cursor.getString(cursor.getColumnIndexOrThrow(Constants.EXP)));
-            if (cursor.getString(cursor.getColumnIndexOrThrow(Constants.EXPIRED)).equals("true")) {
+
+            // set expired if item expired
+            boolean expired = false;
+            try {
+                if (!expired && new SimpleDateFormat("MM/dd/yy", Locale.CANADA).parse(date.getText().toString()).before(Calendar.getInstance().getTime())) {
+                    db.setExpired("true", Integer.toString(uid));
+                    expired = true;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if (cursor.getString(cursor.getColumnIndexOrThrow(Constants.EXPIRED)).equals("true") || expired) {
                 isExpired.setVisibility(View.VISIBLE);
                 reminderSwitch.setEnabled(false);
                 reminderOption.setEnabled(false);
