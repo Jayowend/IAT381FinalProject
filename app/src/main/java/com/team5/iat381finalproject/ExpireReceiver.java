@@ -14,18 +14,42 @@ public class ExpireReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         int uid = intent.getIntExtra("uid", -1);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.sharedprefs_filename), Context.MODE_PRIVATE);
         if (intent.getAction().equals(context.getString(R.string.intent_action_name_expire_notification_cleared))) {
-            SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.sharedprefs_filename), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.remove("alarmtime_" + uid);
             editor.apply();
         } else {
             // https://developer.android.com/guide/topics/ui/notifiers/notifications.html#CreateNotification
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                    .setSmallIcon(R.drawable.photo_placeholder)
-                    .setContentTitle("Food Expiration Reminder!")
-                    .setContentText("Your food is expiring soon")
-                    .setAutoCancel(true);
+            NotificationCompat.Builder mBuilder;
+            if (intent.getAction().equals(context.getString(R.string.intent_action_name_expire_notification))) {
+                mBuilder = new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.photo_placeholder)
+                        .setContentTitle("Food Expired")
+                        .setContentText("One of your items has expired.")
+                        .setAutoCancel(true);
+            } else {
+                String expiresIn;
+                // use sharedprefs to get alarm time
+                switch(sharedPreferences.getInt("alarmtime_" + uid, 0)) {
+                    case 0:
+                        expiresIn = "7 days";
+                        break;
+                    case 1:
+                        expiresIn = "3 days";
+                        break;
+                    case 2:
+                        expiresIn = "1 day!";
+                        break;
+                    default:
+                        expiresIn = "7 days";
+                }
+                mBuilder = new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.photo_placeholder)
+                        .setContentTitle("Reminder: Food Expiry")
+                        .setContentText("Your food is expiring soon, in " + expiresIn)
+                        .setAutoCancel(true);
+            }
             // explicit intent
             Intent resultIntent = new Intent(context, ItemDetailsActivity.class);
             resultIntent.setAction(intent.getAction()); // pass action

@@ -31,6 +31,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
+                <action android:name="com.team5.iat381finalproject.action.EXPIRY_NOTIFICATION_REMINDER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
                 <action android:name="com.team5.iat381finalproject.action.EXPIRY_NOTIFICATION_CLEARED" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

@@ -17,7 +17,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
                     Constants.UID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     Constants.NAME + " TEXT, " +
                     Constants.EXP + " TEXT, " +
-                    Constants.IMG + " BLOB);" ;
+                    Constants.IMG + " BLOB, " +
+                    Constants.EXPIRED + " TEXT);" ;
 
     // use singleton instance for database helper to prevent database/cursor leaks
     // http://stackoverflow.com/questions/18147354/sqlite-connection-leaked-although-everything-closed/18148718#18148718

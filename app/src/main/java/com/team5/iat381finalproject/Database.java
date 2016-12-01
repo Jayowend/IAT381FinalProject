@@ -32,14 +32,26 @@ class Database {
                 }
         columns = matches.toArray(new String[matches.size()]);
     }
-    public long insertData (String name, String date, byte[] photo) {
+
+    public long insertData(String name, String date, byte[] photo) {
         db = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(Constants.NAME, name);
         contentValues.put(Constants.EXP, date);
         contentValues.put(Constants.IMG, photo);
+        contentValues.put(Constants.EXPIRED, "false");
         long id = db.insert(Constants.TABLE_NAME, null, contentValues);
+
+        return id;
+    }
+
+    public long setExpired(String expired, String uid) {
+        db = databaseHelper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Constants.EXPIRED, expired);
+        long id = db.update(Constants.TABLE_NAME, contentValues, "_id=" + uid, null);
 
         return id;
     }

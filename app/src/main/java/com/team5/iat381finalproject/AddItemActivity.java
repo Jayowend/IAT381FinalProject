@@ -138,7 +138,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
             nCalendar.add(Calendar.DAY_OF_MONTH, offset);
 
             // create new intent
-            Intent notificationIntent = new Intent(getString(R.string.intent_action_name_expire_notification));
+            Intent notificationIntent = new Intent(getString(R.string.intent_action_name_expire_notification_reminder));
             notificationIntent.addCategory("android.intent.category.DEFAULT");
             notificationIntent.putExtra("uid", uid);
             editor.putInt("alarmtime_" + uid, reminderOption.getSelectedItemPosition());
@@ -149,6 +149,16 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, nCalendar.getTimeInMillis(), pendingIntent);
         }
+
+        // set expiry notification, similar to above
+        Intent notificationIntent = new Intent(getString(R.string.intent_action_name_expire_notification));
+        notificationIntent.addCategory("android.intent.category.DEFAULT");
+        notificationIntent.putExtra("uid", uid);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(AddItemActivity.this, uid, notificationIntent, 0);
+        Calendar eCalendar = Calendar.getInstance();
+        eCalendar.set(year, month, day);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, eCalendar.getTimeInMillis(), pendingIntent);
 
         if (uid < 0)
             Toast.makeText(this, "Failed to add item", Toast.LENGTH_SHORT).show();

@@ -45,18 +45,32 @@ public class ItemDetailsActivity extends AppCompatActivity implements AdapterVie
 
         TextView name = (TextView) findViewById(R.id.itemName);
         TextView date = (TextView) findViewById(R.id.expirationDate);
+        TextView isExpired = (TextView) findViewById(R.id.isExpired);
         ImageView itemImageView = (ImageView) findViewById(R.id.itemImage);
         reminderSwitch = (Switch) findViewById(R.id.reminderSwitch);
         reminderOption = (Spinner) findViewById(R.id.reminderOptions);
 
         uid = getIntent().getIntExtra("uid", -1);
         db = new Database(this);
+
+        // disable reminder notification and clear pending for expired items
+        if (getString(R.string.intent_action_name_expire_notification).equals(getIntent().getAction())) {
+            reminderSwitch.setChecked(false);
+            db.setExpired("true", Integer.toString(uid));
+        }
+
         cursor = db.getData(Constants.UID, Integer.toString(uid));
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
-            // get cursor data based on position from intentExtra
+
+            // set data
             name.setText(cursor.getString(cursor.getColumnIndexOrThrow(Constants.NAME)));
             date.setText(cursor.getString(cursor.getColumnIndexOrThrow(Constants.EXP)));
+            if (cursor.getString(cursor.getColumnIndexOrThrow(Constants.EXPIRED)).equals("true")) {
+                isExpired.setVisibility(View.VISIBLE);
+                reminderSwitch.setEnabled(false);
+                reminderOption.setEnabled(false);
+            }
 
             byte[] imageByte = cursor.getBlob(cursor.getColumnIndexOrThrow(Constants.IMG));
             if (imageByte.length > 0) {
@@ -68,7 +82,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements AdapterVie
         }
 
         // check for existing reminder notification
-        Intent notificationIntent = new Intent(getString(R.string.intent_action_name_expire_notification));
+        Intent notificationIntent = new Intent(getString(R.string.intent_action_name_expire_notification_reminder));
         notificationIntent.addCategory("android.intent.category.DEFAULT");
 
         // matching pendingIntent to the one scheduled
@@ -108,7 +122,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements AdapterVie
                     nCalendar.add(Calendar.DAY_OF_MONTH, offset);
 
                     // new intent
-                    Intent notificationIntent = new Intent(getString(R.string.intent_action_name_expire_notification));
+                    Intent notificationIntent = new Intent(getString(R.string.intent_action_name_expire_notification_reminder));
                     notificationIntent.addCategory("android.intent.category.DEFAULT");
                     notificationIntent.putExtra("uid", uid);
                     editor.putInt("alarmtime_" + uid, reminderOption.getSelectedItemPosition());
@@ -140,7 +154,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements AdapterVie
         reminderOption.setOnItemSelectedListener(this);
 
         // clear pendingIntent if (user enters through notification || notification cleared)
-        if (getString(R.string.intent_action_name_expire_notification).equals(getIntent().getAction()) || sharedPreferences.getInt("alarmtime_" + uid, -1) == -1) {
+        if (getString(R.string.intent_action_name_expire_notification_reminder).equals(getIntent().getAction()) || sharedPreferences.getInt("alarmtime_" + uid, -1) == -1) {
             reminderSwitch.setChecked(false);
             setEnableToast = false;
         }

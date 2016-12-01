@@ -8,4 +8,5 @@ class Constants {
     public static final String NAME = "name";
     public static final String EXP = "date";
     public static final String IMG = "image";
+    public static final String EXPIRED = "expired";
 }
