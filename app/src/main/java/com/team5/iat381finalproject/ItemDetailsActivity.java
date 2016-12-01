@@ -11,7 +11,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -25,7 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class ItemDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class ItemDetailsActivity extends AppCompatActivity {
     private Database db;
     private Cursor cursor;
     private Switch reminderSwitch;
@@ -47,7 +49,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements AdapterVie
         editor = sharedPreferences.edit();
 
         TextView name = (TextView) findViewById(R.id.itemName);
-        TextView date = (TextView) findViewById(R.id.expirationDate);
+        final TextView date = (TextView) findViewById(R.id.expirationDate);
         TextView isExpired = (TextView) findViewById(R.id.isExpired);
         ImageView itemImageView = (ImageView) findViewById(R.id.itemImage);
         reminderSwitch = (Switch) findViewById(R.id.reminderSwitch);
@@ -81,6 +83,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements AdapterVie
             }
             if (cursor.getString(cursor.getColumnIndexOrThrow(Constants.EXPIRED)).equals("true") || expired) {
                 isExpired.setVisibility(View.VISIBLE);
+                reminderSwitch.setChecked(false);
                 reminderSwitch.setEnabled(false);
                 reminderOption.setEnabled(false);
             }
@@ -118,7 +121,13 @@ public class ItemDetailsActivity extends AppCompatActivity implements AdapterVie
                 // enable reminder notification
                 if (b) {
                     // set notification calendar
-                    final Calendar calendar = Calendar.getInstance();
+                    Calendar calendar = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy", Locale.CANADA);
+                    try {
+                        calendar.setTime(sdf.parse(date.getText().toString()));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     Calendar nCalendar = Calendar.getInstance();
                     nCalendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
@@ -164,7 +173,9 @@ public class ItemDetailsActivity extends AppCompatActivity implements AdapterVie
                 }
             }
         });
-        reminderOption.setOnItemSelectedListener(this);
+        SpinnerInteractionListener reminderListener = new SpinnerInteractionListener();
+        reminderOption.setOnTouchListener(reminderListener);
+        reminderOption.setOnItemSelectedListener(reminderListener);
 
         // clear pendingIntent if (user enters through notification || notification cleared)
         if (getString(R.string.intent_action_name_expire_notification_reminder).equals(getIntent().getAction()) || sharedPreferences.getInt("alarmtime_" + uid, -1) == -1) {
@@ -186,25 +197,41 @@ public class ItemDetailsActivity extends AppCompatActivity implements AdapterVie
     }
 
     boolean override;
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        editor.putInt("reminderOptionSelectedItemPosition", reminderOption.getSelectedItemPosition());
-        editor.apply();
-        boolean currentState = setEnableToast;
-        reminderSwitch.setChecked(false);
-        reminderSwitch.setChecked(true);
-        if (currentState) {
-            toast.setText("Reminder notification Updated");
-            toast.show();
-        } else {
-            toast.setText("Reminder notification Enabled");
-            toast.show();
+    // fixes bug spinner onItemSelected being fired on start
+    // http://stackoverflow.com/a/28466568/2709339
+    public class SpinnerInteractionListener implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
+
+        boolean userSelect = false;
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            userSelect = true;
+            return false;
         }
 
-    }
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            if (userSelect) {
+                // Your selection handling code here
+                editor.putInt("reminderOptionSelectedItemPosition", reminderOption.getSelectedItemPosition());
+                editor.apply();
+                boolean currentState = setEnableToast;
+                reminderSwitch.setChecked(false);
+                reminderSwitch.setChecked(true);
+                if (currentState) {
+                    toast.setText("Reminder notification Updated");
+                    toast.show();
+                } else {
+                    toast.setText("Reminder notification Enabled");
+                    toast.show();
+                }
+                userSelect = false;
+            }
+        }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
 
+        }
     }
 }

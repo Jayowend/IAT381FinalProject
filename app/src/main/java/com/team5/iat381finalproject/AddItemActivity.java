@@ -6,12 +6,15 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 //import android.icu.text.SimpleDateFormat;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 //import android.icu.util.Calendar;
 import java.util.Calendar;
+
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,6 +27,8 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -42,12 +47,14 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
     private Database db;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_additem);
 
+        mImageView = (ImageView) findViewById(R.id.imageButton);
         nameEditText = (EditText) findViewById(R.id.nameEditText);
         expireDateEditText = (EditText) findViewById(R.id.expirationEditText);
         reminderSwitch = (Switch) findViewById(R.id.reminderSwitch);
@@ -200,12 +207,17 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 //            Bundle extras = data.getExtras();
-            try {
-                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(mCurrentPhotoPath));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ImageView mImageView = (ImageView) findViewById(R.id.imageButton);
+            imageBitmap = decodeSampledBitmapFromResource(mCurrentPhotoPath, 500, 500);
+            // full size image too resource intensive, need to scale down!
+//            try {
+//                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(mCurrentPhotoPath));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mImageView.getLayoutParams();
+            //params.width = imageBitmap.getWidth();
+            params.height = Math.min(imageBitmap.getHeight(), 500);
+            mImageView.setLayoutParams(params);
             mImageView.setImageBitmap(imageBitmap);
         }
     }
@@ -223,8 +235,47 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        //mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        mCurrentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    // scale down photo
+    // https://developer.android.com/training/displaying-bitmaps/load-bitmap.html
+    public static Bitmap decodeSampledBitmapFromResource(String pathName, int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(pathName, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(pathName, options);
+    }
+
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 
     @Override

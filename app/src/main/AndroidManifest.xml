@@ -40,7 +40,6 @@
             </intent-filter>
         </receiver>
 
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

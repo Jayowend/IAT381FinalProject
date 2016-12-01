@@ -23,13 +23,13 @@
     <TextView
         android:text="Expiration Date"
         android:textStyle="italic"
-        android:textSize="32px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/expirationDate"
         android:layout_below="@+id/itemName"
         android:layout_alignStart="@+id/itemName"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="0dp"
+        android:textSize="16dp" />
 
     <ImageView
         android:layout_width="wrap_content"
