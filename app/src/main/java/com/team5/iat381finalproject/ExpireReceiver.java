@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
@@ -19,6 +20,8 @@ public class ExpireReceiver extends BroadcastReceiver {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.remove("alarmtime_" + uid);
             editor.apply();
+        } else if (!sharedPreferences.getBoolean("notificationsOn", false)) {
+            // notifications off
         } else {
             // https://developer.android.com/guide/topics/ui/notifiers/notifications.html#CreateNotification
             NotificationCompat.Builder mBuilder;
@@ -69,6 +72,11 @@ public class ExpireReceiver extends BroadcastReceiver {
             PendingIntent deletePendingIntent = PendingIntent.getBroadcast(context, uid, deleteIntent, 0);
             mBuilder.setDeleteIntent(deletePendingIntent);
 
+            if (sharedPreferences.getBoolean("vibrationOn", false))
+                mBuilder.setVibrate(new long[] {0, 250});
+            String stringUri = sharedPreferences.getString(context.getString(R.string.settings_notification_tone_uri), "");
+            if (sharedPreferences.getBoolean("soundOn", false) && stringUri != null)
+                mBuilder.setSound(Uri.parse(stringUri));
             NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             mNotificationManager.notify(uid, mBuilder.build());
         }

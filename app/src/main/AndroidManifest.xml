@@ -6,6 +6,7 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
@@ -25,17 +26,21 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
         <receiver android:name=".ExpireReceiver">
             <intent-filter>
                 <action android:name="com.team5.iat381finalproject.action.EXPIRY_NOTIFICATION" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="com.team5.iat381finalproject.action.EXPIRY_NOTIFICATION_REMINDER" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="com.team5.iat381finalproject.action.EXPIRY_NOTIFICATION_CLEARED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
@@ -47,25 +52,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InventoryActivity"
-                  android:parentActivityName=".MainActivity">
-                    <meta-data
-                        android:name="android.support.PARENT_ACTIVITY"
-                        android:value=".MainActivity" />
+        <activity
+            android:name=".InventoryActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
-        <activity android:name=".AddItemActivity"
-                  android:screenOrientation="portrait"
-                  android:parentActivityName=".MainActivity">
-                  <meta-data
-                      android:name="android.support.PARENT_ACTIVITY"
-                      android:value=".MainActivity" />
+        <activity
+            android:name=".AddItemActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
-        <activity android:name=".ItemDetailsActivity"
-                  android:parentActivityName=".InventoryActivity">
-                  <meta-data
-                      android:name="android.support.PARENT_ACTIVITY"
-                      android:value=".InventoryActivity" />
+        <activity
+            android:name=".ItemDetailsActivity"
+            android:parentActivityName=".InventoryActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InventoryActivity" />
         </activity>
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>
