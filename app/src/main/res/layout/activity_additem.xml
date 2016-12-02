@@ -138,6 +138,6 @@
         android:layout_alignBottom="@+id/barcodeScan"
         android:layout_alignStart="@+id/addItem"
         android:text="UPC: "
-        android:visibility="invisible" />
+        android:visibility="visible" />
 
 </RelativeLayout>
