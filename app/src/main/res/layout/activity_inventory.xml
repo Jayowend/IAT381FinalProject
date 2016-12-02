@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.team5.iat381finalproject.InventoryActivity">
+    tools:context="com.team5.iat381finalproject.InventoryActivity"
+    android:background="#AFE0E8">
 
 
     <ListView
@@ -22,8 +23,9 @@
         android:text="Your inventory"
         android:textStyle="bold"
         android:textAllCaps="true"
-        android:textSize="48px"
-        android:textColor="#70C6E0"
+        android:textSize="30dp"
+        android:letterSpacing="0.1"
+        android:textColor="#FFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView"

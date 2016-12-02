@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
+    android:background="#AFE0E8"
     >
 
     <TextView
@@ -14,7 +15,8 @@
         android:id="@+id/itemName"
         android:textStyle="bold"
         android:textAllCaps="true"
-        android:textSize="18dp"
+        android:textSize="30dp"
+        android:letterSpacing="0.1"
         android:textColor="@android:color/background_light"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"/>
@@ -23,13 +25,15 @@
     <TextView
         android:text="Expiration Date"
         android:textStyle="italic"
-        android:layout_width="match_parent"
+        android:letterSpacing="0.1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/expirationDate"
         android:layout_below="@+id/itemName"
-        android:layout_alignStart="@+id/itemName"
-        android:layout_marginTop="0dp"
-        android:textSize="16dp" />
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:textSize="16dp"
+        />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -49,7 +53,9 @@
         android:spinnerMode="dialog"
         android:entries="@array/reminder_dates"
         android:layout_alignTop="@+id/reminderSwitch"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/reminderSwitch"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="13dp"/>
 
     <Switch
         android:text="Reminder Notification"
@@ -60,32 +66,39 @@
         android:switchPadding="10dp"
         android:layout_marginTop="35dp"
         android:layout_below="@+id/itemImage"
-        android:layout_alignStart="@+id/expirationDate" />
+        android:layout_alignStart="@+id/expirationDate"
+        android:layout_marginStart="8dp"/>
 
     <Button
         android:text="back"
-        android:layout_width="350px"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:onClick="backButton"
         android:id="@+id/backButton"
-        android:textColor="#FFFFFF"
-        android:background="#7C9BB2"
+        android:textColor="#7C9BB2"
+        android:background="#AFE0E8"
         android:layout_below="@+id/reminderSwitch"
         android:layout_alignStart="@+id/reminderSwitch"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="50dp"
+        android:textStyle="bold"
+
+        style="?android:attr/borderlessButtonStyle"
+        />
 
     <Button
         android:text="Delete"
-        android:layout_width="350px"
+        android:textStyle="bold"
+        android:layout_width="100dp"
         android:layout_height="40dp"
         android:id="@+id/deleteButton"
         android:textColor="#FFFFFF"
         android:onClick="delete"
-        android:background="#85C9E8"
-        android:layout_marginLeft="5px"
-        android:layout_marginStart="14dp"
+        android:background="#7C9BB2"
+        android:layout_marginStart="9dp"
         android:layout_toEndOf="@+id/backButton"
-        android:layout_alignBottom="@+id/backButton" />
+        android:layout_alignBottom="@+id/backButton"
+        style="?android:attr/borderlessButtonStyle"
+        />
 
     <TextView
         android:text="Expired"

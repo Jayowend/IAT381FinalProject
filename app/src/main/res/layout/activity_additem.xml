@@ -2,19 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:text="Adding an Item"
-        android:textStyle="bold"
-        android:textAllCaps="true"
-        android:textSize="18dp"
-        android:textColor="@android:color/background_light"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/addItem"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp" />
+    android:layout_height="match_parent"
+    android:background="#AFE0E8">
 
     <ImageButton
         app:srcCompat="@drawable/photo_placeholder"
@@ -24,11 +13,12 @@
         android:layout_below="@+id/addItem"
         android:layout_alignParentStart="true"
         android:layout_marginTop="24dp"
-        android:layout_height="220dp"
+        android:layout_height="200dp"
         android:layout_width="fill_parent"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:cropToPadding="true" />
+        android:cropToPadding="true"
+        android:background="#AFE0E8"/>
 
     <TextView
         android:text="Name"
@@ -36,7 +26,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/Name"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
         android:layout_below="@+id/imageButton"/>
 
     <EditText
@@ -44,6 +35,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/nameEditText"
+        android:layout_marginTop="-10dp"
         android:layout_marginStart="15dp"
         android:inputType="text"
         android:layout_below="@+id/Name"
@@ -55,18 +47,20 @@
         android:layout_height="wrap_content"
         android:id="@+id/expirationDate"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
         android:layout_below="@+id/nameEditText"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
+        android:layout_marginTop="-5dp"
         android:ems="10"
         android:id="@+id/expirationEditText"
         android:inputType="date"
         android:hint="MM/DD/YY"
-        android:maxLength="10"
+        android:maxLength="11"
         android:focusable="false"
         android:layout_below="@+id/expirationDate"
         android:layout_toStartOf="@+id/save_button" />
@@ -75,55 +69,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/reminderOptions"
-        android:layout_alignTop="@+id/reminderSwitch"
-        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/reminderSwitch"
+        android:layout_marginStart="13dp"
         android:spinnerMode="dialog"
-        android:entries="@array/reminder_dates" />
-
-    <Button
-        android:text="Scan Barcode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/barcodeScan"
-        android:onClick="scanBarcode"
-        android:layout_marginEnd="9dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="9dp" />
+        android:entries="@array/reminder_dates"
+        />
 
     <Button
         android:text="Discard"
-        android:layout_width="350px"
+        android:layout_width="100dp"
         android:layout_height="40dp"
         android:id="@+id/discard_button"
-        android:textColor="#FFFFFF"
-        android:background="#7C9BB2"
+        android:textColor="#7C9BB2"
+        android:background="#AFE0E8"
         android:onClick="discardItem"
         android:layout_marginTop="26dp"
-        android:layout_below="@+id/reminderSwitch"
-        android:layout_alignStart="@+id/expirationDate" />
+        android:textStyle="bold"
+        android:layout_below="@+id/reminderOptions"
+        android:layout_alignStart="@+id/expirationDate"
+        style="?android:attr/borderlessButtonStyle"
+        />
 
     <Button
         android:text="Save"
-        android:layout_width="350px"
+        android:layout_width="100dp"
         android:layout_height="40dp"
         android:id="@+id/save_button"
         android:textColor="#FFFFFF"
-        android:background="#85C9E8"
+        android:textStyle="bold"
+        android:background="#7C9BB2"
         android:onClick="addItem"
         android:layout_alignBottom="@+id/discard_button"
         android:layout_toEndOf="@+id/discard_button"
         android:layout_marginStart="9dp"
-        android:layout_alignTop="@+id/discard_button" />
+        android:layout_alignTop="@+id/discard_button"
+        style="?android:attr/borderlessButtonStyle"
+        />
 
     <Switch
         android:text="Reminder Notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/reminderSwitch"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="2dp"
         android:splitTrack="false"
         android:switchPadding="10dp"
+        android:layout_marginStart="8dp"
         android:layout_below="@+id/expirationEditText"
         android:layout_alignStart="@+id/expirationEditText" />
 
@@ -135,9 +126,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/barcodeTextView"
-        android:layout_alignBottom="@+id/barcodeScan"
         android:layout_alignStart="@+id/addItem"
+        android:layout_marginTop="60dp"
         android:text="UPC: "
         android:visibility="visible" />
+
+    <TextView
+        android:text="Add Item"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textSize="30dp"
+        android:letterSpacing="0.1"
+        android:textColor="@android:color/background_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addItem"
+        android:layout_marginTop="20dp"
+        android:layout_alignStart="@+id/nameEditText" />
+
+    <Button
+        android:text="Scan Barcode"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="#7C9BB2"
+        android:textColor="#FFF"
+        android:textSize="12dp"
+        android:id="@+id/barcodeScan"
+        android:onClick="scanBarcode"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="25dp"
+        android:layout_toEndOf="@+id/addItem" />
 
 </RelativeLayout>

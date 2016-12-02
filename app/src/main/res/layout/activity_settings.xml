@@ -8,10 +8,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.team5.iat381finalproject.SettingsActivity">
+    tools:context="com.team5.iat381finalproject.SettingsActivity"
+    android:background="#AFE0E8">
 
     <TextView
         android:text="Settings"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:letterSpacing="0.1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
@@ -20,7 +24,7 @@
         android:layout_marginStart="23dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:textColor="#70C6E0" />
+        android:textColor="#FFF" />
 
     <TextView
         android:text="Enable notifications"
@@ -53,14 +57,6 @@
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
-        android:id="@+id/notificationSwitch"
-        android:layout_below="@+id/textView"
-        android:layout_alignStart="@+id/textView" />
-
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:id="@+id/vibrationSwitch"
         android:layout_below="@+id/notificationSwitch"
@@ -83,27 +79,13 @@
         android:layout_width="40dp" />
 
     <TextView
-        android:text="Ringtone Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:id="@+id/ringtoneTitle"
-        android:maxLines="1"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="14sp"
-        android:textStyle="normal|italic"
-        android:layout_below="@+id/soundSwitch"
-        android:layout_alignStart="@+id/textView5"
-        android:layout_marginStart="11dp"
-        android:onClick="selectRingtone" />
-
-    <TextView
         android:text="Notifications"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView8"
         android:textSize="18sp"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="#FFF"
+        android:textStyle="bold"
         android:layout_marginBottom="15dp"
         android:layout_above="@+id/textView3"
         android:layout_alignStart="@+id/notificationSwitch" />
@@ -114,8 +96,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView2"
         android:textSize="18sp"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="#FFF"
+        android:textStyle="bold"
         android:layout_centerVertical="true"
+        android:layout_marginTop="20dp"
         android:layout_alignStart="@+id/soundSwitch" />
 
     <Switch
@@ -134,5 +118,28 @@
         android:layout_alignBaseline="@+id/barcodePhotoSwitch"
         android:layout_alignBottom="@+id/barcodePhotoSwitch"
         android:layout_alignStart="@+id/textView5" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        android:id="@+id/notificationSwitch"
+        android:layout_below="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
+
+    <TextView
+        android:text="Ringtone Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ringtoneTitle"
+        android:maxLines="1"
+        android:textColorHint="#FFF"
+        android:textColor="#FFF"
+        android:textSize="14sp"
+        android:textStyle="normal|italic"
+        android:onClick="selectRingtone"
+        android:layout_below="@+id/soundSwitch"
+        android:layout_alignEnd="@+id/textView2"
+        android:fontFamily="sans-serif" />
 
 </RelativeLayout>
