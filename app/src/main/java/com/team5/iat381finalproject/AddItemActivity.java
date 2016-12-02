@@ -22,6 +22,7 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
@@ -42,7 +43,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
 
-public class AddItemActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddItemActivity extends AppCompatActivity {
     private EditText nameEditText, expireDateEditText;
     private Switch reminderSwitch;
     private Spinner reminderOption;
@@ -112,7 +113,9 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                 editor.apply();
             }
         });
-        reminderOption.setOnItemSelectedListener(this);
+        SpinnerInteractionListener reminderListener = new SpinnerInteractionListener();
+        reminderOption.setOnTouchListener(reminderListener);
+        reminderOption.setOnItemSelectedListener(reminderListener);
     }
 
     public void addItem (View view) {
@@ -289,16 +292,34 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         return inSampleSize;
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        editor.putInt("reminderOptionSelectedItemPosition", reminderOption.getSelectedItemPosition());
-        editor.apply();
-        reminderSwitch.setChecked(true);
-    }
+    boolean override;
+    // fixes bug spinner onItemSelected being fired on start
+    // http://stackoverflow.com/a/28466568/2709339
+    public class SpinnerInteractionListener implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+        boolean userSelect = false;
 
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            userSelect = true;
+            return false;
+        }
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            if (userSelect) {
+                // Your selection handling code here
+                editor.putInt("reminderOptionSelectedItemPosition", reminderOption.getSelectedItemPosition());
+                editor.apply();
+                reminderSwitch.setChecked(true);
+                userSelect = false;
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
     }
 
     private String barcode;
