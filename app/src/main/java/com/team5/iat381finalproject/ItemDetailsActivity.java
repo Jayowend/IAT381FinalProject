@@ -88,6 +88,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
                 reminderOption.setEnabled(false);
             }
 
+            // grab existing image blob from database
             byte[] imageByte = cursor.getBlob(cursor.getColumnIndexOrThrow(Constants.IMG));
             if (imageByte.length > 0) {
                 Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
@@ -101,7 +102,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
         Intent notificationIntent = new Intent(getString(R.string.intent_action_name_expire_notification_reminder));
         notificationIntent.addCategory("android.intent.category.DEFAULT");
 
-        // matching pendingIntent to the one scheduled
+        // recreate matching pendingIntent to the one scheduled
         pendingIntent = PendingIntent.getBroadcast(this, uid, notificationIntent, PendingIntent.FLAG_NO_CREATE);
         if (pendingIntent != null) {
             reminderSwitch.setChecked(true);

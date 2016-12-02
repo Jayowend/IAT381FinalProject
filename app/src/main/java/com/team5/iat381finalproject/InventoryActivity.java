@@ -24,6 +24,7 @@ public class InventoryActivity extends Activity implements AdapterView.OnItemCli
     @Override
     public void onResume() {
         super.onResume();
+        // refresh inventory list
         populateList();
     }
 
