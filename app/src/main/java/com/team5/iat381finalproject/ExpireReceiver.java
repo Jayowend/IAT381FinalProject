@@ -48,7 +48,7 @@ public class ExpireReceiver extends BroadcastReceiver {
                         expiresIn = "7 days";
                 }
                 mBuilder = new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.photo_placeholder)
+                        .setSmallIcon(R.drawable.logo)
                         .setContentTitle("Reminder: Food Expiry")
                         .setContentText("Your food is expiring soon, in " + expiresIn)
                         .setAutoCancel(true);

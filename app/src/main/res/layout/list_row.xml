@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Item"
+        android:text="ITEM"
         android:id="@+id/nameTextView"
         android:layout_weight="2.90"
         android:gravity="left"
@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="95dp"
         android:layout_height="wrap_content"
-        android:text="Expiry"
+        android:text="EXPIRATION"
         android:id="@+id/dateTextView"
         android:gravity="right" />
 

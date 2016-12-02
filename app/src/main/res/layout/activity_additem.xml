@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/barcodeTextView"
         android:text="UPC: "
-        android:visibility="visible"
+        android:visibility="invisible"
         android:layout_below="@+id/addItem"
         android:layout_alignStart="@+id/addItem"
         android:layout_marginLeft="1dp" />
@@ -122,7 +122,8 @@
         android:layout_above="@+id/reminderSwitch"
         android:layout_alignStart="@id/addItem"
         android:layout_marginLeft="-5dp"
-        android:paddingLeft="5dp" />
+        android:paddingLeft="5dp"
+        android:layout_alignEnd="@+id/barcodeScan" />
 
     <TextView
         android:text="Expiration Date"
@@ -141,15 +142,14 @@
         android:inputType="text"
         android:hint="e.g. Milk, cookies"
         android:backgroundTint="?android:attr/textColorTertiary"
-        android:maxLength="30"
+        android:maxLength="50"
         android:layout_above="@+id/expirationDate"
         android:layout_alignStart="@+id/Name"
         android:layout_marginBottom="10dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="100dp"
         android:paddingLeft="5dp"
         android:layout_marginLeft="-10dp"
-        android:layout_marginStart="-5dp" />
+        android:layout_marginStart="-5dp"
+        android:layout_alignEnd="@+id/expirationEditText" />
 
     <TextView
         android:text="Name"
