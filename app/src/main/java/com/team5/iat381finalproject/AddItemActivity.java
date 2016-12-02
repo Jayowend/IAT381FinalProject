@@ -21,17 +21,21 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.File;
 import java.io.IOException;
@@ -91,7 +95,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
 
                         // format date
                         calendar.set(pYear, pMonth, pDay);
-                        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy", Locale.CANADA);
+                        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
                         expireDateEditText.setText(sdf.format(calendar.getTime()));
                     }
                 }, year, month, day);
@@ -166,6 +170,13 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         eCalendar.set(year, month, day);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, eCalendar.getTimeInMillis(), pendingIntent);
+
+        // save barcode data into sharedprefs
+        if (barcode != null) {
+            editor.putString("upc_" + barcode + "_name", name);
+            editor.putString("upc_" + barcode + "_expiry", date);
+            editor.apply();
+        }
 
         if (uid < 0)
             Toast.makeText(this, "Failed to add item", Toast.LENGTH_SHORT).show();
@@ -288,5 +299,59 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    private String barcode;
+    // barcode scan to store repeated items in sharedprefs, for easier data entry (only name so far)
+    public void scanBarcode(View view) {
+        // Google Play Services Barcode API
+        // https://developers.google.com/vision/barcodes-overview
+        if (imageBitmap != null) {
+            BarcodeDetector detector = new BarcodeDetector.Builder(getApplicationContext())
+                    .setBarcodeFormats(Barcode.UPC_A | Barcode.UPC_E | Barcode.EAN_8 | Barcode.EAN_13 | Barcode.PRODUCT)
+                    .build();
+            if (!detector.isOperational()) {
+                return;
+            }
+
+            Frame frame = new Frame.Builder().setBitmap(imageBitmap).build();
+            SparseArray<Barcode> barcodes = detector.detect(frame);
+
+            try {
+                if (barcodes.size() > 0) {
+                    Barcode thisCode = barcodes.valueAt(0);
+                    barcode = thisCode.rawValue;
+                    ((TextView) findViewById(R.id.barcodeTextView)).setText("UPC: " + barcode);
+                    ((TextView) findViewById(R.id.barcodeTextView)).setVisibility(View.VISIBLE);
+
+                    // get sharedprefs data matching upc barcode
+                    String itemName = sharedPreferences.getString("upc_" + barcode + "_name", null);
+                    String expiryDate = sharedPreferences.getString("upc_" + barcode + "_expiry", null);
+                    if (itemName != null) {
+                      nameEditText.setText(itemName);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA).parse(expiryDate));
+                        year = calendar.get(Calendar.YEAR);
+                        month = calendar.get(Calendar.MONTH);
+                        day = calendar.get(Calendar.DAY_OF_MONTH);
+                        expireDateEditText.setText(expiryDate);
+                      Toast.makeText(this, "Barcode found! Data updated", Toast.LENGTH_SHORT).show();
+                    } else {
+                        ((TextView) findViewById(R.id.barcodeTextView)).append(" (new)");
+                        Toast.makeText(this, "Barcode detected but no data found\nSave this item first", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    barcode = null;
+                    ((TextView) findViewById(R.id.barcodeTextView)).setVisibility(View.INVISIBLE);
+                    Toast.makeText(this, "Barcode not recognized\nPlease try again", Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            mImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.photo_placeholder));
+            imageBitmap = null;
+        } else {
+            Toast.makeText(this, "Tap the picture & take a photo of the barcode first!", Toast.LENGTH_LONG).show();
+        }
     }
 }

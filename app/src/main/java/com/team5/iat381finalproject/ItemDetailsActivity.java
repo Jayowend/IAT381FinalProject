@@ -74,7 +74,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
             // set expired if item expired
             boolean expired = false;
             try {
-                if (!expired && new SimpleDateFormat("MM/dd/yy", Locale.CANADA).parse(date.getText().toString()).before(Calendar.getInstance().getTime())) {
+                if (!expired && new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA).parse(date.getText().toString()).before(Calendar.getInstance().getTime())) {
                     db.setExpired("true", Integer.toString(uid));
                     expired = true;
                 }
@@ -122,7 +122,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
                 if (b) {
                     // set notification calendar
                     Calendar calendar = Calendar.getInstance();
-                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy", Locale.CANADA);
+                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
                     try {
                         calendar.setTime(sdf.parse(date.getText().toString()));
                     } catch (ParseException e) {

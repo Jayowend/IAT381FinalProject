@@ -59,17 +59,49 @@
         android:layout_below="@+id/nameEditText"/>
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:ems="10"
         android:id="@+id/expirationEditText"
         android:inputType="date"
         android:hint="MM/DD/YY"
-        android:maxLength="8"
+        android:maxLength="10"
         android:focusable="false"
         android:layout_below="@+id/expirationDate"
-        />
+        android:layout_toStartOf="@+id/save_button" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reminderOptions"
+        android:layout_alignTop="@+id/reminderSwitch"
+        android:layout_alignParentEnd="true"
+        android:spinnerMode="dialog"
+        android:entries="@array/reminder_dates" />
+
+    <Button
+        android:text="Scan Barcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/barcodeScan"
+        android:onClick="scanBarcode"
+        android:layout_marginEnd="9dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="9dp" />
+
+    <Button
+        android:text="Discard"
+        android:layout_width="350px"
+        android:layout_height="40dp"
+        android:id="@+id/discard_button"
+        android:textColor="#FFFFFF"
+        android:background="#7C9BB2"
+        android:onClick="discardItem"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/reminderSwitch"
+        android:layout_alignStart="@+id/expirationDate" />
 
     <Button
         android:text="Save"
@@ -80,41 +112,32 @@
         android:background="#85C9E8"
         android:onClick="addItem"
         android:layout_alignBottom="@+id/discard_button"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/discard_button"
+        android:layout_marginStart="9dp"
         android:layout_alignTop="@+id/discard_button" />
-
-    <Button
-        android:text="Discard"
-        android:layout_width="350px"
-        android:layout_height="40dp"
-        android:id="@+id/discard_button"
-        android:textColor="#FFFFFF"
-        android:background="#7C9BB2"
-        android:onClick="discardItem"
-        android:layout_marginBottom="38dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/save_button"
-        android:layout_marginEnd="8dp" />
 
     <Switch
         android:text="Reminder Notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/reminderSwitch"
-        android:layout_marginTop="12dp"
-        android:layout_below="@+id/expirationEditText"
-        android:layout_alignStart="@+id/expirationEditText"
+        android:layout_marginTop="28dp"
         android:splitTrack="false"
-        android:switchPadding="10dp" />
+        android:switchPadding="10dp"
+        android:layout_below="@+id/expirationEditText"
+        android:layout_alignStart="@+id/expirationEditText" />
 
-    <Spinner
+    <TextView
+        android:textStyle="italic"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        android:textColor="@android:color/background_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/reminderOptions"
-        android:layout_alignTop="@+id/reminderSwitch"
-        android:layout_alignParentEnd="true"
-        android:spinnerMode="dialog"
-        android:entries="@array/reminder_dates" />
+        android:id="@+id/barcodeTextView"
+        android:layout_alignBottom="@+id/barcodeScan"
+        android:layout_alignStart="@+id/addItem"
+        android:text="UPC: "
+        android:visibility="invisible" />
 
 </RelativeLayout>
