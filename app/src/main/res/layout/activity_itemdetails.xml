@@ -8,9 +8,10 @@
     android:background="@color/background"
     >
 
+
     <TextView
-        android:text="Name of Item"
-        android:layout_width="match_parent"
+        android:text="Name of Itemaaaaaaaaa"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/itemName"
         android:textStyle="bold"
@@ -18,9 +19,11 @@
         android:textSize="30dp"
         android:letterSpacing="0.1"
         android:textColor="@android:color/background_light"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"/>
-
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:maxWidth="250dp"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:text="Expiration Date"
@@ -30,10 +33,25 @@
         android:layout_height="wrap_content"
         android:id="@+id/expirationDate"
         android:layout_below="@+id/itemName"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
-        android:textSize="16dp"
-        />
+        android:textSize="16dp" />
+
+
+    <TextView
+        android:text="Expired"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/isExpired"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textSize="24sp"
+        android:textColor="@android:color/background_light"
+        android:visibility="visible"
+        android:layout_alignBaseline="@+id/itemName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="10dp" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -42,20 +60,13 @@
         android:id="@+id/itemImage"
         android:contentDescription="Item Photo"
         android:layout_marginTop="10dp"
+        android:scaleType="fitCenter"
         android:layout_below="@+id/expirationDate"
-        android:layout_centerHorizontal="true" />
-
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/reminderOptions"
-        android:spinnerMode="dialog"
-        android:entries="@array/reminder_dates"
-        android:layout_alignTop="@+id/reminderSwitch"
-        android:layout_below="@+id/reminderSwitch"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="13dp"/>
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:layout_alignBottom="@id/reminderSwitch"
+        android:layout_marginBottom="50dp" />
 
     <Switch
         android:text="Reminder Notification"
@@ -64,10 +75,25 @@
         android:id="@+id/reminderSwitch"
         android:splitTrack="false"
         android:switchPadding="10dp"
-        android:layout_marginTop="35dp"
-        android:layout_below="@+id/itemImage"
+        android:layout_marginStart="9dp"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@+id/reminderOptions"
         android:layout_alignStart="@+id/expirationDate"
-        android:layout_marginStart="8dp"/>
+        android:textSize="21sp"
+        android:thumbTint="@color/colorPrimary"
+        android:trackTint="@color/colorAccent" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reminderOptions"
+        android:spinnerMode="dialog"
+        android:entries="@array/reminder_dates"
+        android:layout_marginBottom="30dp"
+        android:layout_above="@+id/deleteButton"
+        android:layout_marginEnd="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_alignStart="@+id/reminderSwitch" />
 
     <Button
         android:text="back"
@@ -77,13 +103,11 @@
         android:id="@+id/backButton"
         android:textColor="#7C9BB2"
         android:background="#AFE0E8"
-        android:layout_below="@+id/reminderSwitch"
-        android:layout_alignStart="@+id/reminderSwitch"
-        android:layout_marginTop="50dp"
         android:textStyle="bold"
-
         style="?android:attr/borderlessButtonStyle"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/reminderSwitch"
+        android:layout_marginBottom="60dp" />
 
     <Button
         android:text="Delete"
@@ -97,23 +121,6 @@
         android:layout_marginStart="9dp"
         android:layout_toEndOf="@+id/backButton"
         android:layout_alignBottom="@+id/backButton"
-        style="?android:attr/borderlessButtonStyle"
-        />
-
-    <TextView
-        android:text="Expired"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/isExpired"
-        android:textStyle="bold"
-        android:textAllCaps="true"
-        android:textSize="18dp"
-        android:textColor="@android:color/background_light"
-        android:layout_marginEnd="25dp"
-        android:layout_alignBaseline="@+id/itemName"
-        android:layout_alignBottom="@+id/itemName"
-        android:layout_alignParentEnd="true"
-        android:visibility="invisible" />
-
+        style="?android:attr/borderlessButtonStyle" />
 
 </RelativeLayout>

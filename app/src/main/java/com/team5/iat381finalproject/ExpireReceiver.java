@@ -27,7 +27,7 @@ public class ExpireReceiver extends BroadcastReceiver {
             NotificationCompat.Builder mBuilder;
             if (intent.getAction().equals(context.getString(R.string.intent_action_name_expire_notification))) {
                 mBuilder = new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.photo_placeholder)
+                        .setSmallIcon(R.drawable.logo)
                         .setContentTitle("Food Expired")
                         .setContentText("One of your items has expired.")
                         .setAutoCancel(true);

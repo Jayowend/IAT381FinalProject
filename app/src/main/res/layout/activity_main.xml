@@ -33,8 +33,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:id="@+id/imageView"
-        />
+        android:id="@+id/imageView" />
 
     <Button
         android:text="Inventory"
@@ -48,8 +47,7 @@
         android:textSize="60px"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/addItem_Button"
-        android:layout_alignParentStart="true"
-        />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="Add Item"
@@ -63,8 +61,7 @@
         android:onClick="addItem"
         android:layout_marginTop="50dp"
         android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true"
-        />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="Settings"
@@ -78,8 +75,7 @@
         android:textStyle="bold"
         android:layout_marginTop="11dp"
         android:layout_below="@+id/suggestion_Button"
-        android:layout_alignParentStart="true"
-        />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="Food Suggestions"
