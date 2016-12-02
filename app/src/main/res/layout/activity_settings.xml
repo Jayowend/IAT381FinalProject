@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.team5.iat381finalproject.SettingsActivity"
-    android:background="#AFE0E8">
+    android:background="@color/background">
 
     <TextView
         android:text="Settings"
