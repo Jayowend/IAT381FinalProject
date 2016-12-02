@@ -108,4 +108,31 @@
         android:layout_above="@+id/textView3"
         android:layout_alignStart="@+id/notificationSwitch" />
 
+    <TextView
+        android:text="Barcode Scanning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:textSize="18sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/soundSwitch" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:id="@+id/barcodePhotoSwitch"
+        android:layout_below="@+id/textView2"
+        android:layout_alignStart="@+id/textView2" />
+
+    <TextView
+        android:text="Use barcode photo for item image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView6"
+        android:layout_alignBaseline="@+id/barcodePhotoSwitch"
+        android:layout_alignBottom="@+id/barcodePhotoSwitch"
+        android:layout_alignStart="@+id/textView5" />
+
 </RelativeLayout>

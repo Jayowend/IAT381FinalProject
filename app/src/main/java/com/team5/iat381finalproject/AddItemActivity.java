@@ -339,8 +339,16 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                     } else {
                         ((TextView) findViewById(R.id.barcodeTextView)).append(" (new)");
                         Toast.makeText(this, "Barcode detected but no data found\nSave this item first", Toast.LENGTH_LONG).show();
+                        nameEditText.setText("");
+                        expireDateEditText.setText("");
+                    }
+                    if (!sharedPreferences.getBoolean("barcodePhotoOn", false)) {
+                        mImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.photo_placeholder));
+                        imageBitmap = null;
                     }
                 } else {
+                    mImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.photo_placeholder));
+                    imageBitmap = null;
                     barcode = null;
                     ((TextView) findViewById(R.id.barcodeTextView)).setVisibility(View.INVISIBLE);
                     Toast.makeText(this, "Barcode not recognized\nPlease try again", Toast.LENGTH_LONG).show();
@@ -348,8 +356,6 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            mImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.photo_placeholder));
-            imageBitmap = null;
         } else {
             Toast.makeText(this, "Tap the picture & take a photo of the barcode first!", Toast.LENGTH_LONG).show();
         }

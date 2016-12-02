@@ -67,6 +67,16 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        Switch barcodePhotoSwitch = (Switch) findViewById(R.id.barcodePhotoSwitch);
+        barcodePhotoSwitch.setChecked(sharedPreferences.getBoolean("barcodePhotoOn", false));
+        barcodePhotoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                editor.putBoolean("barcodePhotoOn", b);
+                editor.apply();
+            }
+        });
+
 
     }
 
